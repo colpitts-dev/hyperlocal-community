@@ -1,21 +1,14 @@
-# Turborepo starter
+# Hyperlocal Community Engagement Platform
 
-This is an official starter Turborepo.
-
-## Using this example
-
-Run the following command:
-
-```sh
-npx create-turbo@latest
-```
+Welcome to the mono repo, have a look around!
 
 ## What's inside?
 
-This Turborepo includes the following packages/apps:
+This monorepo includes the following packages/apps:
 
-### Apps and Packages
+### Services, Apps and Packages
 
+- `community-service`: a [serverless](https://www.serverless.com/) microservice
 - `docs`: a [Next.js](https://nextjs.org/) app
 - `web`: another [Next.js](https://nextjs.org/) app
 - `ui`: a stub React component library shared by both `web` and `docs`
@@ -24,7 +17,8 @@ This Turborepo includes the following packages/apps:
   and `eslint-config-prettier`)
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+All serviuces/packages/apps are 100%
+[TypeScript](https://www.typescriptlang.org/).
 
 ### Utilities
 
