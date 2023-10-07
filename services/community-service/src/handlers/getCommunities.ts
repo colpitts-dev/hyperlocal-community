@@ -1,10 +1,7 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { ScanCommand, DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
-import middy from '@middy/core'
-import httpErrorHandler from '@middy/http-error-handler'
-import httpEventNormalizer from '@middy/http-event-normalizer'
-import httpJsonBodyParser from '@middy/http-json-body-parser'
 import createError from 'http-errors'
+import { commonMiddleware } from 'src/lib/commonMiddleware'
 
 const client = new DynamoDBClient({})
 const docClient = DynamoDBDocumentClient.from(client)
@@ -27,7 +24,4 @@ async function getCommunities(event: any) {
   }
 }
 
-export const handler = middy(getCommunities)
-  .use(httpJsonBodyParser())
-  .use(httpEventNormalizer())
-  .use(httpErrorHandler())
+export const handler = commonMiddleware(getCommunities)

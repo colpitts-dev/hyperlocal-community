@@ -1,14 +1,11 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { PutCommand, DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
-import middy from '@middy/core'
-import httpErrorHandler from '@middy/http-error-handler'
-import httpEventNormalizer from '@middy/http-event-normalizer'
-import httpJsonBodyParser from '@middy/http-json-body-parser'
 import createError from 'http-errors'
 import { v4 as uuid } from 'uuid'
+import { commonMiddleware } from '../lib/commonMiddleware'
 
 const client = new DynamoDBClient({})
-const docClient = DynamoDBDocumentClient.from(client)
+const dynamo = DynamoDBDocumentClient.from(client)
 
 async function createCommunity(event: any) {
   const { title } = event?.body
@@ -27,7 +24,7 @@ async function createCommunity(event: any) {
       Item: community,
     })
 
-    await docClient.send(command)
+    await dynamo.send(command)
 
     return {
       statusCode: 201,
@@ -39,7 +36,4 @@ async function createCommunity(event: any) {
   }
 }
 
-export const handler = middy(createCommunity)
-  .use(httpJsonBodyParser())
-  .use(httpEventNormalizer())
-  .use(httpErrorHandler())
+export const handler = commonMiddleware(createCommunity)

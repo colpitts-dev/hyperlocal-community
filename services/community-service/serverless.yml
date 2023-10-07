@@ -43,6 +43,18 @@ functions:
       - http:
           method: GET
           path: /communities
+  updateCommunity:
+    handler: src/handlers/updateCommunity.handler
+    events:
+      - http:
+          method: PUT
+          path: /communities/{id}
+  deleteCommunity:
+    handler: src/handlers/deleteCommunity.handler
+    events:
+      - http:
+          method: PUT
+          path: /communities/{id}
 
 package:
   individually: true
