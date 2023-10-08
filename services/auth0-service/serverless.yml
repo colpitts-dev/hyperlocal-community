@@ -1,0 +1,59 @@
+service: hyperlocal-auth0-service
+frameworkVersion: '3'
+
+plugins:
+  - serverless-esbuild
+
+provider:
+  name: aws
+  region: ca-central-1
+  runtime: nodejs18.x
+  memorySize: 256
+  stage: ${opt:stage, 'dev'}
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
+    NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000'
+    AUTH0_PUBLIC_KEY: ${file(secret.pem)}
+
+resources:
+  Resources:
+    GatewayResponseDefault4XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+
+functions:
+  auth:
+    handler: src/handlers/auth.handler
+  publicEndpoint:
+    handler: src/handlers/public.handler
+    events:
+      - http:
+          path: public
+          method: POST
+  privateEndpoint:
+    handler: src/handlers/private.handler
+    events:
+      - http:
+          path: private
+          method: POST
+          authorizer: auth
+
+package:
+  individually: true
+
+custom:
+  esbuild:
+    bundle: true
+    minify: false
+    sourcemap: true
+    exclude:
+      - aws-sdk
+    target: 'node18'
+    platform: 'node'
+    concurrency: 10
