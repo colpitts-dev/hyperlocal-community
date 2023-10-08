@@ -6,7 +6,7 @@
   "author": "Adam Colpitts",
   "license": "MIT",
   "scripts": {
-    "dev": "serverless offline start",
+    "dev": "serverless offline start --httpPort 4000",
     "check:updates": "npx npm-check-updates",
     "check:updates:u": "npx npm-check-updates -u && pnpm i",
     "deploy:dev": "serverless deploy --verbose",
