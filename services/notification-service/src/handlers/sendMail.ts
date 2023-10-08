@@ -4,20 +4,26 @@ import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses'
 const client = new SESClient({ region: 'ca-central-1' })
 
 export async function sendMail(event: any) {
+  const record = event?.Records[0]
+  console.log('record: ', record)
+
+  const email = JSON.parse(record?.body)
+  const { subject, body, recipient } = email
+
   const params = {
     Source: 'adam@colpitts.dev',
     Destination: {
-      ToAddresses: ['adam@colpitts.dev'],
+      ToAddresses: [recipient],
     },
     Message: {
       Body: {
         Text: {
           Charset: 'UTF-8',
-          Data: 'Hello from SES!',
+          Data: body,
         },
       },
       Subject: {
-        Data: 'Test Email Notification',
+        Data: subject,
       },
     },
   }

@@ -1,4 +1,4 @@
-SendMailIAM:
+HyperlocalSendMailIAM:
   Effect: Allow
   Action:
     - ses:SendEmail

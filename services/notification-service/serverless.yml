@@ -16,16 +16,27 @@ provider:
   iam:
     role:
       statements:
-        - ${file(iam/SendMailIAM.yml):SendMailIAM}
+        - ${file(iam/HyperlocalMailQueueIAM.yml):HyperlocalMailQueueIAM}
+
+resources:
+  Resources:
+    HyperlocalMailQueue: ${file(resources/HyperlocalMailQueue.yml):HyperlocalMailQueue}
 
 functions:
   sendMail:
     handler: src/handlers/sendMail.handler
+    events:
+      - sqs:
+          arn: ${self:custom.HyperlocalMailQueue.arn}
+          batchSize: 1
 
 package:
   individually: true
 
 custom:
+  HyperlocalMailQueue:
+    name: HyperlocalMailQueue-${self:provider.stage}
+    arn: !GetAtt HyperlocalMailQueue.Arn
   esbuild:
     bundle: true
     minify: false
