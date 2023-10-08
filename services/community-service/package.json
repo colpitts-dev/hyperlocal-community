@@ -24,8 +24,6 @@
     "@types/uuid": "^9.0.5",
     "esbuild": "^0.19.4",
     "serverless-esbuild": "^1.48.4",
-    "serverless-offline": "^13.2.0",
-    "serverless-dynamodb-local": "^0.2.40",
     "tsconfig": "*",
     "typescript": "^5.2.2"
   },
