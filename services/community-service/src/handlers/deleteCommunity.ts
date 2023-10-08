@@ -2,8 +2,8 @@ import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocumentClient, DeleteCommand } from '@aws-sdk/lib-dynamodb'
 import createError from 'http-errors'
 import { commonMiddleware } from '../lib/commonMiddleware'
-const client = new DynamoDBClient({})
 
+const client = new DynamoDBClient({})
 const dynamo = DynamoDBDocumentClient.from(client)
 
 async function deleteCommunity(event: any) {
@@ -11,8 +11,6 @@ async function deleteCommunity(event: any) {
     'Content-Type': 'application/json',
   }
   const { id } = event.pathParameters
-
-  const now = new Date()
 
   try {
     const command = new DeleteCommand({
@@ -22,7 +20,7 @@ async function deleteCommunity(event: any) {
       },
     })
 
-    const response = await dynamo.send(command)
+    await dynamo.send(command)
 
     return {
       statusCode: 200,

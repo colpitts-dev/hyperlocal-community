@@ -1,0 +1,20 @@
+HyperlocalAuctionsTableIAM:
+  Effect: Allow
+  Action:
+    - dynamodb:DescribeTable
+    - dynamodb:Query
+    - dynamodb:Scan
+    - dynamodb:GetItem
+    - dynamodb:PutItem
+    - dynamodb:UpdateItem
+    - dynamodb:DeleteItem
+  Resource:
+    - ${self:custom.HyperlocalAuctionsTable.arn}
+    - !Join [
+        '/',
+        [
+          '${self:custom.HyperlocalAuctionsTable.arn}',
+          'index',
+          'statusAndEndDate',
+        ],
+      ]

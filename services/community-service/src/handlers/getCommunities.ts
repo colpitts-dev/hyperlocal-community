@@ -4,7 +4,7 @@ import createError from 'http-errors'
 import { commonMiddleware } from 'src/lib/commonMiddleware'
 
 const client = new DynamoDBClient({})
-const docClient = DynamoDBDocumentClient.from(client)
+const dynamo = DynamoDBDocumentClient.from(client)
 
 async function getCommunities(event: any) {
   try {
@@ -12,7 +12,7 @@ async function getCommunities(event: any) {
       TableName: process.env.COMMUNITIES_TABLE_NAME,
     })
 
-    const response = await docClient.send(command)
+    const response = await dynamo.send(command)
 
     return {
       statusCode: 200,
