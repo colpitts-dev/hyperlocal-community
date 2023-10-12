@@ -3,12 +3,19 @@
 @tailwind utilities;
 
 :root {
-  --max-width: 1440px;
-  --border-radius: 12px;
+  --max-width: 1336px;
+  --border-radius: 4px;
+  --callout-rgb: 20, 20, 20;
+  --callout-border-rgb: 108, 108, 108;
+  --card-rgb: 100, 100, 100;
+  --card-border-rgb: 200, 200, 200;
 
   --font-sans: 'Inter', sans-serif;
   --font-serif: Cambria, 'Hoefler Text', Utopia, 'Liberation Serif',
     'Nimbus Roman No9 L Regular', Times, 'Times New Roman', serif;
+  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
+    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
+    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
 
   --theme-color-primary: #7baa47;
   --theme-color-primary-variant: #547430;
