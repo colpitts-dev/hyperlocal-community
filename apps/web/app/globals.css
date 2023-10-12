@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  /* Design System */
   --max-width: 1336px;
   --border-radius: 4px;
   --callout-rgb: 20, 20, 20;
@@ -17,6 +18,7 @@
     'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
 
+  /* Light Theme */
   --theme-color-primary: #7baa47;
   --theme-color-primary-variant: #547430;
   --theme-color-on-primary: #ffffff;
@@ -28,6 +30,14 @@
   --theme-color-on-error: #ffffff;
   --theme-color-on-background: #171717;
   --theme-color-on-surface: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  /* Dark Theme */
+  :root {
+    --theme-color-background: #212124;
+    --theme-color-on-background: #f6f7f9;
+  }
 }
 
 body {

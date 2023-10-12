@@ -1,5 +1,5 @@
 .header {
-  @apply flex justify-end bg-white;
+  @apply flex justify-end bg-white dark:bg-black;
 }
 
 .main {
@@ -55,6 +55,7 @@
 }
 
 .card h2 {
+  @apply font-sans;
   font-weight: 600;
   margin-bottom: 0.7rem;
 }

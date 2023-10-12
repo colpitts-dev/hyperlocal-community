@@ -39,26 +39,19 @@ export default async function Index(): Promise<JSX.Element> {
         </a>
       </header>
       <main className={styles.main}>
-        <section className="bg-yellow-300">
+        <section className="text-center mb-12">
           <h1>
             <span className="text-primary">Hyper</span>
             <span className="text-primary-variant">local</span>
           </h1>
           <p>Public Landing Page</p>
         </section>
-        <section className="bg-yellow-300">
-          <div className={styles.grid}>
-            {LINKS.map(({ title, href, description }) => (
-              <Card
-                className={styles.card}
-                href={href}
-                key={title}
-                title={title}
-              >
-                {description}
-              </Card>
-            ))}
-          </div>
+        <section className={styles.grid}>
+          {LINKS.map(({ title, href, description }) => (
+            <Card className={styles.card} href={href} key={title} title={title}>
+              {description}
+            </Card>
+          ))}
         </section>
       </main>
     </>
