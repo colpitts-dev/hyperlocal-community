@@ -1,5 +1,6 @@
 import { getSession } from '@auth0/nextjs-auth0'
 import { redirect } from 'next/navigation'
+import styles from './page.module.css'
 
 export default async function Index(): Promise<JSX.Element> {
   const session = await getSession()
@@ -7,10 +8,12 @@ export default async function Index(): Promise<JSX.Element> {
 
   return (
     <>
-      <header>
-        <a href="/api/auth/login">Login</a>
+      <header className={styles.header}>
+        <a className={styles['login-btn']} href="/api/auth/login">
+          Login
+        </a>
       </header>
-      <main>
+      <main className={styles.main}>
         <h1>Hyperlocal</h1>
         <p>Public Landing Page</p>
       </main>

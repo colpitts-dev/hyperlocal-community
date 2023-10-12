@@ -1,50 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  --max-width: 1100px;
+  --max-width: 1440px;
   --border-radius: 12px;
-  --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
-    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
-    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: Cambria, 'Hoefler Text', Utopia, 'Liberation Serif',
+    'Nimbus Roman No9 L Regular', Times, 'Times New Roman', serif;
 
-  --callout-rgb: 20, 20, 20;
-  --callout-border-rgb: 108, 108, 108;
-  --card-rgb: 100, 100, 100;
-  --card-border-rgb: 200, 200, 200;
+  --theme-color-primary: #7baa47;
+  --theme-color-primary-variant: #547430;
+  --theme-color-on-primary: #ffffff;
 
-  --glow-conic: conic-gradient(
-    from 180deg at 50% 50%,
-    #2a8af6 0deg,
-    #a853ba 180deg,
-    #e92a67 360deg
-  );
-}
+  --theme-color-error: #990000;
+  --theme-color-background: #f6f7f9;
+  --theme-color-surface: #ffffff;
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  --theme-color-on-error: #ffffff;
+  --theme-color-on-background: #171717;
+  --theme-color-on-surface: #171717;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
+  color: var(--theme-color-on-background);
+  background: var(--theme-color-background);
+  font-family: var(--font-sans);
 }

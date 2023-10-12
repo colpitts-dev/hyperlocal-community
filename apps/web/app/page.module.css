@@ -15,6 +15,6 @@
   min-height: 100vh;
 }
 
-.logout-btn {
+.login-btn {
   @apply px-6 py-3 bg-primary text-on-primary;
 }

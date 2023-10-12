@@ -9,18 +9,20 @@ export default withPageAuthRequired(function Dashboard({ user }) {
   return (
     <>
       <header className={styles.header}>
-        <a href="/api/auth/logout">Logout</a>
+        <a className={styles['logout-btn']} href="/api/auth/logout">
+          Logout
+        </a>
       </header>
       <main className={styles.main}>
-        <section className={`${styles.profile}`}>
+        <section className="flex flex-wrap items-center justify-center p-4 bg-surface">
           <Image
             alt={name ?? ''}
             height={240}
             src={picture ?? ''}
             width={240}
           />
-          <div>
-            <h2>{name}</h2>
+          <div className="ml-4">
+            <h2 className="text-2xl font-bold">{name}</h2>
             <p>{email}</p>
           </div>
         </section>
