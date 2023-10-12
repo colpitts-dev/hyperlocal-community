@@ -21,9 +21,12 @@ export default withPageAuthRequired(function Dashboard({ user }) {
             src={picture ?? ''}
             width={240}
           />
-          <div className="ml-4">
-            <h2 className="text-2xl font-bold">{name}</h2>
-            <p>{email}</p>
+          <div className="flex flex-col self-stretch justify-between ml-4">
+            <div>
+              <h2 className="text-2xl font-bold">{name}</h2>
+              <p>{email}</p>
+            </div>
+            <p>Private Members Dashboard</p>
           </div>
         </section>
       </main>

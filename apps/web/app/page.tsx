@@ -14,7 +14,10 @@ export default async function Index(): Promise<JSX.Element> {
         </a>
       </header>
       <main className={styles.main}>
-        <h1>Hyperlocal</h1>
+        <h1>
+          <span className="text-primary">Hyper</span>
+          <span className="text-primary-variant">local</span>
+        </h1>
         <p>Public Landing Page</p>
       </main>
     </>

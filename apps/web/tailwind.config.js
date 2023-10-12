@@ -18,7 +18,7 @@ module.exports = {
         secondary: `var(--theme-color-secondary, ${colors.slate['600']})`,
         'secondary-variant': `var(--theme-color-secondary-variant, ${colors.slate['900']})`,
 
-        background: 'var(--theme-color-background, #f7f8f9)',
+        background: 'var(--theme-color-background, #f6f7f9)',
         surface: 'var(--theme-color-surface, #ffffff)',
         error: `var(--theme-color-error, ${colors.red['500']})`,
 
