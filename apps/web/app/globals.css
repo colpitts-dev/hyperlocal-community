@@ -2,41 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Design System */
 :root {
-  /* Design System */
+  /* Layout */
   --max-width: 1336px;
   --border-radius: 4px;
-  --callout-rgb: 20, 20, 20;
-  --callout-border-rgb: 108, 108, 108;
-  --card-rgb: 100, 100, 100;
-  --card-border-rgb: 200, 200, 200;
-
+  /* Typography */
   --font-sans: 'Inter', sans-serif;
   --font-serif: Cambria, 'Hoefler Text', Utopia, 'Liberation Serif',
     'Nimbus Roman No9 L Regular', Times, 'Times New Roman', serif;
   --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
     'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
-
-  /* Light Theme */
-  --theme-color-primary: #7baa47;
-  --theme-color-primary-variant: #547430;
-  --theme-color-on-primary: #ffffff;
-
-  --theme-color-error: #990000;
-  --theme-color-background: #f6f7f9;
-  --theme-color-surface: #ffffff;
-
-  --theme-color-on-error: #ffffff;
-  --theme-color-on-background: #171717;
-  --theme-color-on-surface: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  /* Dark Theme */
+/* Color Theme - Light */
+@media (prefers-color-scheme: light) {
   :root {
+    --header-bg: #ffffff;
+    --border-color: #f1f1f1;
+    --callout-rgb: 20, 20, 20;
+    --callout-border-rgb: 108, 108, 108;
+    --card-bg: #990000;
+    --card-border-rgb: 200, 200, 200;
+
+    --theme-color-primary: #7baa47;
+    --theme-color-primary-variant: #547430;
+    --theme-color-on-primary: #ffffff;
+
+    --theme-color-error: #990000;
+    --theme-color-background: #f6f7f9;
+    --theme-color-surface: #ffffff;
+
+    --theme-color-on-error: #ffffff;
+    --theme-color-on-background: #171717;
+    --theme-color-on-surface: #171717;
+  }
+}
+
+/* Color Theme - Dark */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --header-bg: #121212;
+    --border-color: #313131;
+
     --theme-color-background: #212124;
     --theme-color-on-background: #f6f7f9;
+    --theme-color-surface: #313131;
   }
 }
 

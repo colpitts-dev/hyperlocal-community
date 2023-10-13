@@ -1,5 +1,5 @@
 .header {
-  @apply flex justify-end bg-white dark:bg-black;
+  @apply p-2 flex justify-end bg-[var(--header-bg)] border-b-[1px] border-b-[var(--border-color)];
 }
 
 .main {
@@ -42,8 +42,8 @@
 .card {
   padding: 1rem 1.2rem;
   border-radius: var(--border-radius);
-  background: rgba(var(--card-rgb), 0);
-  border: 1px solid black; /*rgba(var(--card-border-rgb), 0);*/
+  background: var(--theme-color-surface, #ffffff);
+  border: 1px solid var(--border-color, #000);
   transition:
     background 200ms,
     border 200ms;
