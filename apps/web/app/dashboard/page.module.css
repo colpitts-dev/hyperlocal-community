@@ -1,5 +1,5 @@
 .header {
-  @apply flex justify-end bg-white;
+  @apply p-2 flex justify-end bg-header border-b-[1px] border-b-border;
 }
 
 .main {
@@ -16,5 +16,5 @@
 }
 
 .logout-btn {
-  @apply px-6 py-3 bg-primary text-on-primary;
+  @apply px-6 py-3 rounded bg-primary text-on-primary;
 }

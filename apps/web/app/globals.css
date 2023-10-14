@@ -2,36 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Design System */
 :root {
-  --max-width: 1440px;
-  --border-radius: 12px;
-
-  --font-sans: 'Inter', sans-serif;
-  --font-serif: Cambria, 'Hoefler Text', Utopia, 'Liberation Serif',
+  /* Layout */
+  --theme-max-width: 1336px;
+  --theme-border-radius: 4px;
+  /* Typography */
+  --theme-font-sans: 'Inter', sans-serif;
+  --theme-font-serif: Cambria, 'Hoefler Text', Utopia, 'Liberation Serif',
     'Nimbus Roman No9 L Regular', Times, 'Times New Roman', serif;
-
-  --theme-color-primary: #7baa47;
-  --theme-color-primary-variant: #547430;
-  --theme-color-on-primary: #ffffff;
-
-  --theme-color-error: #990000;
+  --theme-font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono',
+    'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace',
+    'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+  /* Color Theme - Light */
   --theme-color-background: #f6f7f9;
+  --theme-color-border: #f1f1f1;
+  --theme-color-on-background: #121212;
   --theme-color-surface: #ffffff;
-
-  --theme-color-on-error: #ffffff;
-  --theme-color-on-background: #171717;
-  --theme-color-on-surface: #171717;
+  --theme-color-on-surface: #121212;
 }
 
-body {
+/* Color Theme - Dark */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --theme-color-header: #121212;
+    --theme-color-border: #313131;
+
+    --theme-color-background: #212124;
+    --theme-color-on-background: #f6f7f9;
+    --theme-color-surface: #313131;
+    --theme-color-on-surface: #f6f7f9;
+  }
+}
+
+body,
+body.dark {
   color: var(--theme-color-on-background);
   background: var(--theme-color-background);
-  font-family: var(--font-sans);
+  font-family: var(--theme-font-sans);
 }
 
 h1,
 h2,
 h3,
 h4 {
-  font-family: var(--font-serif);
+  font-family: var(--theme-font-serif);
+}
+
+pre,
+code {
+  font-family: var(--theme-font-mono);
 }
