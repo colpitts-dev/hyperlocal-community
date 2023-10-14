@@ -41,10 +41,7 @@ export default async function Index(): Promise<JSX.Element> {
       </header>
       <main className={styles.main}>
         <section className="mb-12 text-center">
-          <h1>
-            <span className="text-primary">Hyper</span>
-            <span className="text-primary-variant">local</span>
-          </h1>
+          <h1 className="text-primary">Hyperlocal</h1>
           <p>Public Landing Page</p>
         </section>
         <section className={`${styles.grid} space-x-4`}>

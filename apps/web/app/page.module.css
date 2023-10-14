@@ -1,5 +1,5 @@
 .header {
-  @apply p-2 flex justify-end bg-[var(--header-bg)] border-b-[1px] border-b-[var(--border-color)];
+  @apply p-2 flex justify-end bg-header border-b-[1px] border-b-border;
 }
 
 .main {
@@ -16,7 +16,7 @@
 }
 
 .login-btn {
-  @apply px-6 py-3 bg-primary text-on-primary;
+  @apply px-6 py-3 rounded bg-primary text-on-primary;
 }
 
 .main {
@@ -40,10 +40,8 @@
 }
 
 .card {
+  @apply rounded bg-surface text-on-surface border-[1px] border-border;
   padding: 1rem 1.2rem;
-  border-radius: var(--border-radius);
-  background: var(--theme-color-surface, #ffffff);
-  border: 1px solid var(--border-color, #000);
   transition:
     background 200ms,
     border 200ms;

@@ -14,7 +14,7 @@ export default withPageAuthRequired(function Dashboard({ user }) {
         </a>
       </header>
       <main className={styles.main}>
-        <section className="flex flex-wrap items-center justify-center p-4 bg-surface">
+        <section className="flex flex-wrap items-center justify-center p-4 rounded bg-surface">
           <Image
             alt={name ?? ''}
             height={240}
