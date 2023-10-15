@@ -1,4 +1,5 @@
 import { Schema, model, Document } from 'mongoose'
+import { MembershipDocument } from './membership.model'
 
 export interface PersonInput {
   name: string
@@ -7,6 +8,7 @@ export interface PersonInput {
 }
 
 export interface PersonDocument extends Document, PersonInput {
+  memberships: MembershipDocument[]
   createdAt: Date
   updatedAt: Date
 }
@@ -32,6 +34,12 @@ const PersonSchema = new Schema<PersonDocument>(
       required: [true, 'Age is required.'],
       min: [18, 'Must be at least 18 years old.'],
     },
+    memberships: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Membership',
+      },
+    ],
   },
   {
     timestamps: true,

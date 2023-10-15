@@ -1,7 +1,7 @@
 import createError from 'http-errors'
 import { v4 as uuid } from 'uuid'
 import { commonMiddleware } from '../lib/commonMiddleware'
-import { Membership } from '../models/membership.model'
+import { Membership } from '@hyperlocal/models'
 
 import { connectMongoDB } from 'src/lib/mongoDB'
 import { getErrorMessage } from 'src/lib/errors'

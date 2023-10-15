@@ -1,23 +1,33 @@
 import mongoose, { connect } from 'mongoose'
 import dotenv from 'dotenv'
-
-import { Person } from '@hyperlocal/models'
-//import { Membership } from '../src/models/membership.model'
+import { faker } from '@faker-js/faker'
+import {
+  Person,
+  Membership,
+  Community,
+  CommunityDocument,
+  PersonDocument,
+} from '@hyperlocal/models'
 
 dotenv.config()
 
-const seedData = [
-  {
-    name: 'Admin',
-    email: 'admin@example.com',
-    age: 21,
-  },
-  {
-    name: 'Zoolander',
-    email: 'zoolander@example.com',
-    age: 33,
-  },
-]
+const COMMUNITY_SEEDS = 5
+const PEOPLE_SEEDS = 25
+
+const getPersonSeed = () => {
+  const name = faker.person.fullName()
+
+  return {
+    name,
+    email: faker.internet.email({ firstName: name }),
+    age: faker.number.int({ min: 18, max: 50 }),
+  }
+}
+
+const getCommunitySeed = () => ({
+  title: faker.company.name(),
+  description: faker.company.buzzPhrase(),
+})
 
 async function run() {
   const dbUri =
@@ -30,9 +40,47 @@ async function run() {
   // Drop all existing data
   await conn.connection.db.dropDatabase()
 
+  // Seed communities
+  const communities: CommunityDocument[] = []
+
+  let i = 0
+  while (i < COMMUNITY_SEEDS) {
+    const communityInput = getCommunitySeed()
+    const community = new Community({ ...communityInput })
+    communities.push(community)
+    await community.save()
+    i++
+  }
+
   // Seed people
-  const members = await Person.collection.insertMany(seedData)
-  console.log(members)
+  const people: PersonDocument[] = []
+
+  let j = 0
+  while (j < PEOPLE_SEEDS) {
+    console.log(`👤  Adding person ${j + 1}/${PEOPLE_SEEDS}`)
+
+    const personInput = getPersonSeed()
+    const person = new Person({ ...personInput })
+
+    const docs = await Community.aggregate([{ $sample: { size: 1 } }])
+    console.log({ docs })
+
+    const myCommunity = await Community.findById(docs[0])
+
+    const membership = new Membership({
+      title: `${person.name} - ${myCommunity?.title}`,
+      owner: person,
+      community: myCommunity,
+    })
+    await membership.save()
+    myCommunity?.memberships.push(membership)
+    await myCommunity?.save()
+    person.memberships.push(membership)
+
+    await person.save()
+
+    j++
+  }
 
   await mongoose.connection.close()
   console.log('\n')
