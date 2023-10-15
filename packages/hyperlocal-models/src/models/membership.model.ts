@@ -8,8 +8,8 @@ export interface MembershipInput {
 }
 
 export interface MembershipDocument extends Document, MembershipInput {
-  owner: PersonDocument
-  community: CommunityDocument
+  owner: PersonDocument['_id']
+  community: CommunityDocument['_id']
   createdAt: Date
   updatedAt: Date
 }
