@@ -16,15 +16,15 @@ provider:
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
     NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000'
-    SECRET_MESSAGE: ${env:SECRET_MESSAGE}
+    MONGO_URI: ${env:MONGO_URI}
 
 functions:
-  hello:
-    handler: src/handlers/hello.handler
+  createMembership:
+    handler: src/handlers/createMembership.handler
     events:
       - http:
-          method: GET
-          path: /hello
+          method: POST
+          path: /memberships
 
 package:
   individually: true
