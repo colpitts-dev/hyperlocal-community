@@ -14,11 +14,13 @@ async function createMembership(event: any, context: any) {
   // Connect to mongodb
   await connectMongoDB()
 
-  const { email, age } = event?.body
+  const { title, isAdmin, ownerId, communityId } = event?.body
 
   const membership = {
-    email,
-    age,
+    ownerId,
+    communityId,
+    title,
+    isAdmin,
   }
 
   try {

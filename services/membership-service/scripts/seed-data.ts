@@ -41,20 +41,15 @@ async function run() {
   await conn.connection.db.dropDatabase()
 
   // Seed communities
-  const communities: CommunityDocument[] = []
-
   let i = 0
   while (i < COMMUNITY_SEEDS) {
     const communityInput = getCommunitySeed()
     const community = new Community({ ...communityInput })
-    communities.push(community)
     await community.save()
     i++
   }
 
-  // Seed people
-  const people: PersonDocument[] = []
-
+  // Seed people w/ memberships
   let j = 0
   while (j < PEOPLE_SEEDS) {
     console.log(`👤  Adding person ${j + 1}/${PEOPLE_SEEDS}`)
