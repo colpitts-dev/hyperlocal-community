@@ -1,10 +1,12 @@
-import { Schema, model, Document } from 'mongoose'
-import { MembershipDocument } from './membership.model'
+import type { Document } from 'mongoose'
+import { Schema, model } from 'mongoose'
+import type { MembershipDocument } from './membership.model'
 
 export interface PersonInput {
   name: string
   email: string
   age: number
+  location?: string
 }
 
 export interface PersonDocument extends Document, PersonInput {
@@ -22,12 +24,16 @@ const PersonSchema = new Schema<PersonDocument>(
       lowercase: true,
       unique: true,
       validate: {
-        validator: function (v: string) {
+        validator(v: string) {
+          // eslint-disable-next-line prefer-named-capture-group -- ignore
           return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v)
         },
         message: 'Please enter a valid email.',
       },
       required: [true, 'Email is required.'],
+    },
+    location: {
+      type: String,
     },
     age: {
       type: Number,
@@ -46,4 +52,11 @@ const PersonSchema = new Schema<PersonDocument>(
   },
 )
 
+/**
+ * Person Model
+ * @alpha
+ * ----
+ * A person belongs to many communities through their memberships.
+ *
+ */
 export const Person = model<PersonDocument>('Person', PersonSchema)

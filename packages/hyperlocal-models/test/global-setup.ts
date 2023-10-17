@@ -1,5 +1,6 @@
 import { MongoMemoryServer } from 'mongodb-memory-server'
 import * as mongoose from 'mongoose'
+// eslint-disable-next-line import/no-extraneous-dependencies -- ignore
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -9,11 +10,11 @@ async function globalSetup() {
   const instance = await MongoMemoryServer.create()
   const uri = instance.getUri()
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access -- ignore
   ;(global as any).__MONGOINSTANCE = instance
-  process.env.MONGO_TEST_URI =
-    uri.slice(0, uri.lastIndexOf('/')) +
-    `/${process.env.MONGO_TEST_DB || 'test'}`
+  process.env.MONGO_TEST_URI = `${uri.slice(0, uri.lastIndexOf('/'))}/${
+    process.env.MONGO_TEST_DB || 'test'
+  }`
 
   mongoose.set('strictQuery', false)
 

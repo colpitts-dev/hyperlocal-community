@@ -1,5 +1,6 @@
-import { model, Schema, Document } from 'mongoose'
-import { MembershipDocument } from './membership.model'
+import type { Document } from 'mongoose'
+import { model, Schema } from 'mongoose'
+import type { MembershipDocument } from './membership.model'
 
 export interface CommunityInput {
   title: string
@@ -19,7 +20,7 @@ const CommunitySchema = new Schema<CommunityDocument>(
       type: String,
       trim: true,
       validate: {
-        validator: function (v: string) {
+        validator(v: string) {
           return /^(?!\s*$).+/.test(v)
         },
         message: 'Please add a valid title.',
@@ -47,11 +48,9 @@ const CommunitySchema = new Schema<CommunityDocument>(
 
 /**
  * Community Model
- * @constructor Community
+ * @alpha
  * ----
- * Communities are the foundation of hyper[local]
+ * A Community is a group of people who share a common interest.
  *
  */
-
 export const Community = model<CommunityDocument>('Community', CommunitySchema)
-export default Community
