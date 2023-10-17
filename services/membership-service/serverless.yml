@@ -49,6 +49,18 @@ functions:
       - http:
           method: POST
           path: /memberships
+  getMemberships:
+    handler: src/handlers/getMemberships.handler
+    events:
+      - http:
+          method: GET
+          path: /memberships
+  getMembership:
+    handler: src/handlers/getMembership.handler
+    events:
+      - http:
+          method: GET
+          path: /memberships/{id}
 
 package:
   individually: true
