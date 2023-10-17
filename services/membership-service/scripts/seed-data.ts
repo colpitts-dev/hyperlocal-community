@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import { faker } from '@faker-js/faker'
 import {
   Person,
+  mockPerson,
   Membership,
   Community,
   CommunityDocument,
@@ -13,16 +14,6 @@ dotenv.config()
 
 const COMMUNITY_SEEDS = 5
 const PEOPLE_SEEDS = 25
-
-const getPersonSeed = () => {
-  const name = faker.person.fullName()
-
-  return {
-    name,
-    email: faker.internet.email({ firstName: name }),
-    age: faker.number.int({ min: 18, max: 50 }),
-  }
-}
 
 const getCommunitySeed = () => ({
   title: faker.company.name(),
@@ -54,7 +45,7 @@ async function run() {
   while (j < PEOPLE_SEEDS) {
     console.log(`👤  Adding person ${j + 1}/${PEOPLE_SEEDS}`)
 
-    const personInput = getPersonSeed()
+    const personInput = mockPerson()
     const person = new Person({ ...personInput })
 
     const docs = await Community.aggregate([{ $sample: { size: 1 } }])

@@ -17,12 +17,12 @@ describe('Community Model', () => {
   })
 
   afterAll(async () => {
-    await community.deleteOne()
+    await Community.deleteOne({ _id: community })
   })
 
   describe('when given valid input', () => {
     it('creates and reads a new document', async () => {
-      const fetchedCommunity = await Community.findOne({ id: community })
+      const fetchedCommunity = await Community.findOne({ _id: community })
 
       expect(fetchedCommunity).toBeDefined()
       expect(fetchedCommunity?.title).toEqual(communityInput.title)
@@ -30,16 +30,16 @@ describe('Community Model', () => {
 
     it('updates an existing document', async () => {
       const communityUpdateInput: CommunityInput = mockCommunity()
-      await Community.updateOne({ id: community }, { ...communityUpdateInput })
-      const fetchedCommunity = await Community.findOne({ id: community })
+      await Community.updateOne({ _id: community }, { ...communityUpdateInput })
+      const fetchedCommunity = await Community.findOne({ _id: community })
       expect(fetchedCommunity).toBeDefined()
       expect(fetchedCommunity).toMatchObject(communityUpdateInput)
       expect(fetchedCommunity).not.toMatchObject(communityInput)
     })
 
     it('deletes an existing document', async () => {
-      await Community.deleteOne({ id: community })
-      const fetchedCommunity = await Community.findOne({ id: community })
+      await Community.deleteOne({ _id: community })
+      const fetchedCommunity = await Community.findOne({ _id: community })
       expect(fetchedCommunity).toBeNull()
     })
   })

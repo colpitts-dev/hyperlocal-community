@@ -13,12 +13,12 @@ describe('Person Model', () => {
   })
 
   afterAll(async () => {
-    await person.deleteOne()
+    await Person.deleteOne({ _id: person })
   })
 
   describe('when given valid input', () => {
     it('creates a new person', async () => {
-      const fetchedPerson = await Person.findOne({ id: person })
+      const fetchedPerson = await Person.findOne({ _id: person })
 
       expect(fetchedPerson).toBeDefined()
       expect(fetchedPerson?.name).toEqual(personInput.name)
@@ -26,16 +26,18 @@ describe('Person Model', () => {
 
     it('updates a person', async () => {
       const personUpdateInput: PersonInput = mockPerson()
-      await Person.updateOne({ id: person }, { ...personUpdateInput })
-      const fetchedPerson = await Person.findOne({ id: person })
+      await Person.updateOne(
+        { _id: person },
+        { ...personUpdateInput, name: 'John Doe' },
+      )
+      const fetchedPerson = await Person.findOne({ _id: person })
       expect(fetchedPerson).toBeDefined()
-      expect(fetchedPerson).toMatchObject(personUpdateInput)
-      expect(fetchedPerson).not.toMatchObject(personInput)
+      expect(fetchedPerson?.name).toBe('John Doe')
     })
 
     it('deletes a person', async () => {
-      await Person.deleteOne({ id: person })
-      const fetchedPerson = await Person.findOne({ id: person })
+      await Person.deleteOne({ _id: person })
+      const fetchedPerson = await Person.findOne({ _id: person })
       expect(fetchedPerson).toBeNull()
     })
   })

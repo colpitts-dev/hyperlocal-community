@@ -33,9 +33,9 @@ describe('Membership Model', () => {
 
   afterAll(async () => {
     await Promise.all([
-      community.deleteOne(),
-      person.deleteOne(),
-      membership.deleteOne(),
+      Community.deleteOne({ _id: community }),
+      Person.deleteOne({ _id: person }),
+      Membership.deleteOne({ _id: membership }),
     ])
   })
 
