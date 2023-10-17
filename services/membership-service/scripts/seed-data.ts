@@ -68,7 +68,7 @@ async function run() {
       community: myCommunity,
     })
     await membership.save()
-    myCommunity?.memberships.push(membership)
+    myCommunity?.memberships?.push(membership)
     await myCommunity?.save()
     person.memberships.push(membership)
 

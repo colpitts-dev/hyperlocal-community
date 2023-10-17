@@ -32,7 +32,11 @@ describe('Membership Model', () => {
   })
 
   afterAll(async () => {
-    await membership.deleteOne()
+    await Promise.all([
+      community.deleteOne(),
+      person.deleteOne(),
+      membership.deleteOne(),
+    ])
   })
 
   describe('when given valid input', () => {

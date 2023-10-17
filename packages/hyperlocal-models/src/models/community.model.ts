@@ -9,7 +9,7 @@ export interface CommunityInput {
 }
 
 export interface CommunityDocument extends CommunityInput, Document {
-  memberships: MembershipDocument[]
+  memberships?: MembershipDocument[]
   updatedAt: Date
   createdAt: Date
 }

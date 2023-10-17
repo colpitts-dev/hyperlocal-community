@@ -10,7 +10,7 @@
     "check:updates": "npx npm-check-updates",
     "check:updates:u": "npx npm-check-updates -u && pnpm i",
     "deploy:dev": "serverless deploy --verbose",
-    "deploy:staging": "serverless deploy --aws-profile $AWS_PROFILE --stage staging",
+    "deploy:staging": "serverless deploy --stage staging",
     "deploy:production": "serverless deploy --aws-profile $AWS_PROFILE --stage production",
     "lint": "eslint '**/*.ts'",
     "lint:fix": "eslint '**/*.ts' --fix",
