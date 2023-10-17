@@ -1,5 +1,4 @@
 import createError from 'http-errors'
-import { v4 as uuid } from 'uuid'
 import { commonMiddleware } from '../lib/commonMiddleware'
 import { Membership, Community, Person } from '@hyperlocal/models'
 
@@ -13,17 +12,16 @@ async function createMembership(event: any, context: any) {
   try {
     // Connect to mongodb
     await connectMongoDB()
-
     const { title, isAdmin, ownerId, communityId } = event?.body
 
     // Check if person exists
-    const owner = await Person.findOne({ id: ownerId })
+    const owner = await Person.findOne({ _id: ownerId })
     if (!owner) {
       throw new createError.NotFound(`Person with id: ${ownerId} not found!`)
     }
 
     // Check if community exists
-    const community = await Community.findOne({ id: communityId })
+    const community = await Community.findOne({ _id: communityId })
     if (!community) {
       throw new createError.NotFound(
         `Community with id: ${communityId} not found!`,
@@ -31,8 +29,8 @@ async function createMembership(event: any, context: any) {
     }
 
     const membership = {
-      ownerId,
-      communityId,
+      owner,
+      community,
       title,
       isAdmin,
     }

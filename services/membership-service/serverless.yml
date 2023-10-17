@@ -19,6 +19,30 @@ provider:
     MONGO_URI: ${env:MONGO_URI}
 
 functions:
+  getPeople:
+    handler: src/handlers/getPeople.handler
+    events:
+      - http:
+          method: GET
+          path: /people
+  getPerson:
+    handler: src/handlers/getPerson.handler
+    events:
+      - http:
+          method: GET
+          path: /people/{id}
+  getCommunities:
+    handler: src/handlers/getCommunities.handler
+    events:
+      - http:
+          method: GET
+          path: /communities
+  getCommunity:
+    handler: src/handlers/getCommunity.handler
+    events:
+      - http:
+          method: GET
+          path: /communities/{id}
   createMembership:
     handler: src/handlers/createMembership.handler
     events:
