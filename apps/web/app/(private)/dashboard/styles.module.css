@@ -1,29 +1,13 @@
 .header {
-  @apply p-2 flex justify-end bg-header border-b-[1px] border-b-border;
-}
-
-.main {
-  h1 {
-    @apply text-4xl font-bold;
-  }
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 6rem;
-  min-height: 100vh;
+  @apply p-2 flex justify-between bg-header border-b-[1px] border-b-border;
 }
 
 .logout-btn {
   @apply px-6 py-3 rounded bg-primary text-on-primary;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(25%, auto));
-  max-width: 100%;
-  width: var(--max-width);
+.dashboard-grid {
+  @apply grid grid-cols-1 gap-4 py-4 md:grid-cols-2 xl:grid-cols-4 md:p-4 xl:p-12;
 }
 
 .card {
@@ -65,13 +49,6 @@
     padding: 4rem;
   }
 
-  .grid {
-    grid-template-columns: 1fr;
-    margin-bottom: 120px;
-    max-width: 320px;
-    text-align: center;
-  }
-
   .card {
     padding: 1rem 2.5rem;
   }
@@ -89,12 +66,5 @@
 
   .card:hover span {
     transform: translateX(4px);
-  }
-}
-
-/* Tablet and Smaller Desktop */
-@media (min-width: 701px) and (max-width: 1120px) {
-  .grid {
-    grid-template-columns: repeat(2, 50%);
   }
 }

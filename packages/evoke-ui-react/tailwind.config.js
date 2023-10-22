@@ -15,13 +15,14 @@ module.exports = {
       colors: {
         white: `var(--theme-color-white, ${colors.white})`,
         black: `var(--theme-color-black, ${colors.black})`,
+        light: `var(--theme-color-light, #f8f9fa)`,
+        dark: `var(--theme-color-dark, #191919)`,
 
-        primary: `var(--theme-color-primary, #7baa47)`,
-        'primary-variant': `var(--theme-color-primary-variant, #547430)`,
-        secondary: `var(--theme-color-secondary, ${colors.slate['600']})`,
-        'secondary-variant': `var(--theme-color-secondary-variant, ${colors.slate['900']})`,
+        primary: `var(--theme-color-primary, #2b65ba)`,
+        secondary: `var(--theme-color-secondary, #c22f27)`,
+        tertiary: `var(--theme-color-tertiary, #f0da4a)`,
 
-        background: 'var(--theme-color-background, #f6f7f9)',
+        background: 'var(--theme-color-background, #f8f9fa)',
         surface: 'var(--theme-color-surface, #ffffff)',
         error: `var(--theme-color-error, ${colors.red['500']})`,
         border: `var(--theme-color-border, #f1f1f1)`,
@@ -31,10 +32,11 @@ module.exports = {
         success: `var(--theme-color-success, ${colors.green['500']})`,
         warning: `var(--theme-color-warning, ${colors.orange['500']})`,
 
-        'on-primary': 'var(--theme-color-on-primary, #ffffff)',
-        'on-secondary': 'var(--theme-color-on-secondary, #e4e4e7)',
-        'on-background': 'var(--theme-color-on-background, #121212)',
-        'on-surface': 'var(--theme-color-on-surface, #121212)',
+        'on-primary': 'var(--theme-color-on-primary, #f8f9fa)',
+        'on-secondary': 'var(--theme-color-on-secondary, #f8f9fa)',
+        'on-tertiary': 'var(--theme-color-on-tertiary, #1a1a1a)',
+        'on-background': 'var(--theme-color-on-background, #1a1a1a)',
+        'on-surface': 'var(--theme-color-on-surface, #1a1a1a)',
         'on-error': 'var(--theme-color-on-error, #ffffff)',
         'on-alert': 'var(--theme-color-on-error, #ffffff)',
         'on-info': 'var(--theme-color-on-info, #ffffff)',
@@ -43,6 +45,13 @@ module.exports = {
       },
       borderRadius: {
         DEFAULT: 'var(--theme-border-radius, 0.25rem)',
+      },
+      gridTemplateColumns: {
+        // Simple 16 column grid
+        auto: 'repeat(auto-fit, minmax(1fr))',
+
+        // Complex site-specific column configuration
+        footer: '200px minmax(900px, 1fr) 100px',
       },
     },
   },

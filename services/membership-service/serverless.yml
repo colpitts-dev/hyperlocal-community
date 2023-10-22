@@ -31,6 +31,12 @@ functions:
       - http:
           method: GET
           path: /people/{id}
+  createCommunity:
+    handler: src/handlers/createCommunity.handler
+    events:
+      - http:
+          method: POST
+          path: /communities
   getCommunities:
     handler: src/handlers/getCommunities.handler
     events:

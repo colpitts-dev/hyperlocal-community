@@ -1,7 +1,7 @@
 import { getSession } from '@auth0/nextjs-auth0'
 import { redirect } from 'next/navigation'
 import { Card } from '@evoke-ui/react'
-import styles from './page.module.css'
+import styles from './styles.module.css'
 
 const LINKS = [
   {

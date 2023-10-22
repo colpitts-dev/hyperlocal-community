@@ -6,6 +6,7 @@ export interface CommunityInput {
   title: string
   description?: string
   isPublic?: boolean
+  theme?: object
 }
 
 export interface CommunityDocument extends CommunityInput, Document {
@@ -40,6 +41,7 @@ const CommunitySchema = new Schema<CommunityDocument>(
         ref: 'Membership',
       },
     ],
+    theme: Object,
   },
   {
     timestamps: true, // to create updatedAt and createdAt
