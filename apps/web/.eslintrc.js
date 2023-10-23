@@ -1,3 +1,6 @@
 module.exports = {
-  extends: ["custom/next"],
-};
+  extends: ['custom/next'],
+  rules: {
+    'react/jsx-sort-props': 'off',
+  },
+}
