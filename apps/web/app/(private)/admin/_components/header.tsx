@@ -41,7 +41,7 @@ export default function Header(): JSX.Element {
           </span>
 
           <input
-            className="w-32 pl-10 pr-4 rounded-md form-input sm:w-64 focus:border-primary"
+            className="w-64 pl-10 pr-4 rounded-md form-input focus:border-primary"
             placeholder="Search"
             type="text"
           />
