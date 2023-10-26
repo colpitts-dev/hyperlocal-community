@@ -1,0 +1,21 @@
+import { Schema, model, Document } from 'mongoose'
+
+export interface {{singularCaps model}}Input {
+  title: string
+}
+
+export interface {{singularCaps model}}Document extends Document, {{singularCaps model}}Input {
+  createdAt: Date
+  updatedAt: Date
+}
+
+const {{singularCaps model}}Schema = new Schema<{{singularCaps model}}Document>(
+  {
+    title: { type: String, required: [true, 'Title is required.'] }
+  },
+  {
+    timestamps: true,
+  },
+)
+
+export const {{singularCaps model}} = model<{{singularCaps model}}Document>('{{singularCaps model}}', {{singularCaps model}}Schema)

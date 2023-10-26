@@ -1,0 +1,58 @@
+import { faker } from '@faker-js/faker'
+
+import { {{singularCaps model}}, {{singularCaps model}}Document, {{singularCaps model}}Input } from './{{singularCamel model}}.model'
+
+const mock{{singularCaps model}} = () => ({
+  title: faker.lorem.words(6)
+})
+
+describe('{{singularCaps model}} Model', () => {
+  let {{singularCamel model}}: {{singularCaps model}}Document, {{singularCamel model}}Input: {{singularCaps model}}Input
+
+  beforeAll(async () => {
+    {{singularCamel model}}Input = mock{{singularCaps model}}()
+    {{singularCamel model}} = new {{singularCaps model}}({ ...{{singularCamel model}}Input })
+
+    await {{singularCamel model}}.save()
+  })
+
+  afterAll(async () => {
+    await {{singularCamel model}}.deleteOne()
+  })
+
+  describe('when given valid input', () => {
+    it('creates and reads a new document', async () => {
+      const fetched{{singularCaps model}} = await {{singularCaps model}}.findOne({ _id: {{singularCamel model}}._id })
+
+      expect(fetched{{singularCaps model}}).toBeDefined()
+      expect(fetched{{singularCaps model}}?.title).toEqual({{singularCamel model}}Input.title)
+    })
+
+    it('updates an existing document', async () => {
+      const {{singularCamel model}}UpdateInput: {{singularCaps model}}Input = mock{{singularCaps model}}()
+      await {{singularCaps model}}.updateOne({ _id: {{singularCamel model}}._id }, { ...{{singularCamel model}}UpdateInput })
+      const fetched{{singularCaps model}} = await {{singularCaps model}}.findOne({ _id: {{singularCamel model}}._id })
+      expect(fetched{{singularCaps model}}).toBeDefined()
+      expect(fetched{{singularCaps model}}).toMatchObject({{singularCamel model}}UpdateInput)
+      expect(fetched{{singularCaps model}}).not.toMatchObject({{singularCamel model}}Input)
+    })
+
+    it('deletes an existing document', async () => {
+      await {{singularCaps model}}.deleteOne({ _id: {{singularCamel model}}._id })
+      const fetched{{singularCaps model}} = await {{singularCaps model}}.findOne({ _id: {{singularCamel model}}._id })
+      expect(fetched{{singularCaps model}}).toBeNull()
+    })
+  })
+
+  describe('when validating documents', () => {
+    const invalid{{singularCaps model}} = new {{singularCaps model}}({
+      title: undefined
+    })
+    const validationResult = invalid{{singularCaps model}}.validateSync()
+
+    it('requires a valid title', () => {
+      const validationError = validationResult?.errors?.title?.message
+      expect(validationError).toBe('Title is required.')
+    })
+  })
+})

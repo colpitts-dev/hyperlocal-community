@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "test": "turbo run test",
     "build": "turbo run build",
     "dev": "turbo run dev --concurrency 15",
     "deploy:dev": "turbo run deploy:dev",
@@ -8,8 +9,10 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "^8.48.0",
     "prettier": "^3.0.3",
+    "prettier-plugin-organize-attributes": "^1.0.0",
     "tsconfig": "*",
     "turbo": "latest"
   },
@@ -38,6 +41,15 @@
     "tabWidth": 2,
     "trailingComma": "all",
     "useTabs": false,
-    "vueIndentScriptAndStyle": false
+    "vueIndentScriptAndStyle": false,
+    "plugins": [
+      "prettier-plugin-organize-attributes"
+    ],
+    "attributeGroups": [
+      "^className$",
+      "^(id|name)$",
+      "$DEFAULT",
+      "^aria-"
+    ]
   }
 }

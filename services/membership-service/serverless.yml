@@ -1,0 +1,83 @@
+service: hyperlocal-membership-service
+frameworkVersion: '3'
+useDotenv: true
+
+plugins:
+  - serverless-esbuild
+  - serverless-offline
+  - serverless-dotenv-plugin
+
+provider:
+  name: aws
+  region: ca-central-1
+  runtime: nodejs18.x
+  memorySize: 256
+  stage: ${opt:stage, 'dev'}
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
+    NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000'
+    MONGO_URI: ${env:MONGO_URI}
+
+functions:
+  getPeople:
+    handler: src/handlers/getPeople.handler
+    events:
+      - http:
+          method: GET
+          path: /people
+  getPerson:
+    handler: src/handlers/getPerson.handler
+    events:
+      - http:
+          method: GET
+          path: /people/{id}
+  createCommunity:
+    handler: src/handlers/createCommunity.handler
+    events:
+      - http:
+          method: POST
+          path: /communities
+  getCommunities:
+    handler: src/handlers/getCommunities.handler
+    events:
+      - http:
+          method: GET
+          path: /communities
+  getCommunity:
+    handler: src/handlers/getCommunity.handler
+    events:
+      - http:
+          method: GET
+          path: /communities/{id}
+  createMembership:
+    handler: src/handlers/createMembership.handler
+    events:
+      - http:
+          method: POST
+          path: /memberships
+  getMemberships:
+    handler: src/handlers/getMemberships.handler
+    events:
+      - http:
+          method: GET
+          path: /memberships
+  getMembership:
+    handler: src/handlers/getMembership.handler
+    events:
+      - http:
+          method: GET
+          path: /memberships/{id}
+
+package:
+  individually: true
+
+custom:
+  esbuild:
+    bundle: true
+    minify: false
+    sourcemap: true
+    exclude:
+      - aws-sdk
+    target: 'node18'
+    platform: 'node'
+    concurrency: 10

@@ -1,0 +1,70 @@
+.header {
+  @apply sticky top-0 p-2 flex justify-between bg-header border-b-[1px] border-b-border;
+}
+
+.logout-btn {
+  @apply px-6 py-3 rounded bg-primary text-on-primary;
+}
+
+.dashboard-grid {
+  @apply grid self-start grid-cols-1 gap-4 py-4 md:grid-cols-2 xl:grid-cols-4 md:p-4 xl:p-12;
+}
+
+.card {
+  @apply rounded bg-surface text-on-surface border-[1px] border-border;
+  padding: 1rem 1.2rem;
+  transition:
+    background 200ms,
+    border 200ms;
+}
+
+.card span {
+  display: inline-block;
+  transition: transform 200ms;
+}
+
+.card h2 {
+  @apply font-sans;
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+}
+
+.card p {
+  margin: 0;
+  opacity: 0.6;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  max-width: 30ch;
+}
+
+@media (prefers-reduced-motion) {
+  .card:hover span {
+    transform: none;
+  }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .content {
+    padding: 4rem;
+  }
+
+  .card {
+    padding: 1rem 2.5rem;
+  }
+
+  .card h2 {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Enable hover only on non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    @apply bg-transparent border-background;
+  }
+
+  .card:hover span {
+    transform: translateX(4px);
+  }
+}

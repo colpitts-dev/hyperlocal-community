@@ -1,0 +1,10 @@
+# package dependencies
+node_modules
+
+# serverless
+.esbuild
+.serverless
+.webpack
+
+# misc
+.DS_Store
