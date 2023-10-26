@@ -1,43 +1,37 @@
-import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses'
+import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+import createError from 'http-errors'
+//import { commonMiddleware } from 'src/lib/commonMiddleware'
 
 // a client can be shared by different commands.
-const client = new SESClient({ region: 'ca-central-1' })
+const client = new SESClient({ region: "ca-central-1" });
 
-export async function sendMail(event: any) {
-  const record = event?.Records[0]
-  console.log('record: ', record)
-
-  const email = JSON.parse(record?.body)
-  const { subject, body, recipient } = email
-
+async function sendMail(event: any) {
   const params = {
     Source: 'adam@colpitts.dev',
     Destination: {
-      ToAddresses: [recipient],
+      ToAddresses: ['adam@colpitts.dev']
     },
     Message: {
       Body: {
         Text: {
-          Charset: 'UTF-8',
-          Data: body,
-        },
+          Data: 'Hello from AWS SES'
+        }
       },
       Subject: {
-        Data: subject,
-      },
-    },
-  }
+        Data: 'Test email'
+      }
+    }
+  };
 
   try {
-    const command = new SendEmailCommand(params)
+    const command = new SendEmailCommand(params);
 
-    const response = await client.send(command)
-
-    console.log(response)
-    return response
-  } catch (error) {
-    console.log(error)
+    const result = await client.send(command);
+    return result
+  } catch (e) {
+    console.error(e)
   }
+
 }
 
-export const handler = sendMail
+export const handler = sendMail //commonMiddleware(sendMail)
