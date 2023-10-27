@@ -1,0 +1,14 @@
+HyperlocalMailQueue:
+  Type: AWS::SQS::Queue
+  Properties:
+    QueueName: ${self:custom.HyperlocalMailQueue.name}
+
+Outputs:
+  HyperlocalMailQueueArn:
+    Value: ${self:custom.HyperlocalMailQueue.arn}
+    Export:
+      Name: ${self:custom.HyperlocalMailQueue.name}-Arn
+  HyperlocalMailQueueUrl:
+    Value: ${self:custom.HyperlocalMailQueue.url}
+    Export:
+      Name: ${self:custom.HyperlocalMailQueue.name}-Url

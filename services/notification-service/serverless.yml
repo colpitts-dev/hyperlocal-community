@@ -23,14 +23,29 @@ provider:
     NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000"
     SECRET_MESSAGE: ${env:SECRET_MESSAGE}
 
+resources:
+  Resources:
+    HyperlocalMailQueue: ${file(resources/HyperlocalMailQueue.yml):HyperlocalMailQueue}
+  Outputs:
+    HyperlocalMailQueueArn: ${file(resources/HyperlocalMailQueue.yml):Outputs.HyperlocalMailQueueArn}
+    HyperlocalMailQueueUrl: ${file(resources/HyperlocalMailQueue.yml):Outputs.HyperlocalMailQueueUrl}
+
 functions:
   sendMail:
     handler: src/handlers/sendMail.handler
+    events:
+      - sqs:
+          arn: ${self:custom.HyperlocalMailQueue.arn}
+          batchSize: 1
 
 package:
   individually: true
 
 custom:
+  HyperlocalMailQueue:
+    name: HyperlocalMailQueue-${self:provider.stage}
+    arn: !GetAtt HyperlocalMailQueue.Arn
+    url: !Ref HyperlocalMailQueue
   esbuild:
     bundle: true
     minify: false

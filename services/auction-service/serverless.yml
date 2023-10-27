@@ -14,10 +14,12 @@ provider:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
     NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000'
     AUCTIONS_TABLE_NAME: ${self:custom.HyperlocalAuctionsTable.name}
+    MAIL_QUEUE_URL: ${self:custom.HyperlocalMailQueue.url}
   iam:
     role:
       statements:
         - ${file(iam/HyperlocalAuctionsTableIAM.yml):HyperlocalAuctionsTableIAM}
+        - ${file(iam/HyperlocalMailQueueIAM.yml):HyperlocalMailQueueIAM}
 
 resources:
   Resources:
@@ -58,8 +60,8 @@ functions:
 
   processAuctions:
     handler: src/handlers/processAuctions.handler
-    # events:
-    #   - schedule: rate(1 minute)
+    events:
+      - schedule: rate(1 minute)
 
 package:
   individually: true
@@ -69,6 +71,9 @@ custom:
   HyperlocalAuctionsTable:
     name: !Ref HyperlocalAuctionsTable
     arn: !GetAtt HyperlocalAuctionsTable.Arn
+  HyperlocalMailQueue:
+    arn: ${cf:hyperlocal-notification-service-${self:provider.stage}.HyperlocalMailQueueArn}
+    url: ${cf:hyperlocal-notification-service-${self:provider.stage}.HyperlocalMailQueueUrl}
   esbuild:
     bundle: true
     minify: false

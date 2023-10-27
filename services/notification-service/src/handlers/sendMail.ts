@@ -6,19 +6,26 @@ import createError from 'http-errors'
 const client = new SESClient({ region: "ca-central-1" });
 
 async function sendMail(event: any) {
+  const record = event.Records[0]
+  console.log('record processing', record)
+
+  const email = JSON.parse(record.body)
+
+  const {subject, body, recipient} = email
+
   const params = {
     Source: 'adam@colpitts.dev',
     Destination: {
-      ToAddresses: ['adam@colpitts.dev']
+      ToAddresses: [recipient]
     },
     Message: {
       Body: {
         Text: {
-          Data: 'Hello from AWS SES'
+          Data: body
         }
       },
       Subject: {
-        Data: 'Test email'
+        Data: subject
       }
     }
   };
