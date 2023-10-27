@@ -1,5 +1,5 @@
 {
-  "name": "hyperlocal-auction-service",
+  "name": "auction-service",
   "version": "0.1.0",
   "description": "An open source community engagment service",
   "main": "index.js",
@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.427.0",
+    "@aws-sdk/client-sqs": "^3.437.0",
     "@aws-sdk/lib-dynamodb": "^3.427.0",
     "@middy/core": "^4.6.4",
     "@middy/http-error-handler": "^4.6.4",

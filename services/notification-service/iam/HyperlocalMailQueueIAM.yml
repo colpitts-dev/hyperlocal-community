@@ -1,6 +1,5 @@
 HyperlocalMailQueueIAM:
   Effect: Allow
   Action:
-    - sqs:ReceiveMessage
-    - sqs:SendMessage
-  Resource: ${self:custom.HyperlocalMailQueue.arn}
+    - sqs:RecevieMessage
+  Resource: ${self:custom.hyperlocalMailQueue.arn}

@@ -1,8 +1,11 @@
 service: hyperlocal-notification-service
-frameworkVersion: '3'
+frameworkVersion: "3"
+useDotenv: true
 
 plugins:
   - serverless-esbuild
+  - serverless-offline
+  - serverless-dotenv-plugin
 
 provider:
   name: aws
@@ -10,17 +13,22 @@ provider:
   runtime: nodejs18.x
   memorySize: 256
   stage: ${opt:stage, 'dev'}
-  environment:
-    AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
-    NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000'
   iam:
     role:
       statements:
-        - ${file(iam/HyperlocalMailQueueIAM.yml):HyperlocalMailQueueIAM}
+        - ${file(iam/HyperlocalSendMailIAM.yml):HyperlocalSendMailIAM}
+
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
+    NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000"
+    SECRET_MESSAGE: ${env:SECRET_MESSAGE}
 
 resources:
   Resources:
     HyperlocalMailQueue: ${file(resources/HyperlocalMailQueue.yml):HyperlocalMailQueue}
+  Outputs:
+    HyperlocalMailQueueArn: ${file(resources/HyperlocalMailQueue.yml):Outputs.HyperlocalMailQueueArn}
+    HyperlocalMailQueueUrl: ${file(resources/HyperlocalMailQueue.yml):Outputs.HyperlocalMailQueueUrl}
 
 functions:
   sendMail:
@@ -37,12 +45,13 @@ custom:
   HyperlocalMailQueue:
     name: HyperlocalMailQueue-${self:provider.stage}
     arn: !GetAtt HyperlocalMailQueue.Arn
+    url: !Ref HyperlocalMailQueue
   esbuild:
     bundle: true
     minify: false
     sourcemap: true
     exclude:
       - aws-sdk
-    target: 'node18'
-    platform: 'node'
+    target: "node18"
+    platform: "node"
     concurrency: 10

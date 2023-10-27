@@ -1,7 +1,7 @@
 {
-  "name": "hyperlocal-notification-service",
+  "name": "notification-service",
   "version": "0.1.0",
-  "description": "An open source community engagment service",
+  "description": "An open source community engagement platform",
   "main": "index.js",
   "author": "Adam Colpitts",
   "license": "MIT",
@@ -11,23 +11,26 @@
     "deploy:dev": "serverless deploy --verbose",
     "deploy:staging": "serverless deploy --aws-profile $AWS_PROFILE --stage staging",
     "deploy:production": "serverless deploy --aws-profile $AWS_PROFILE --stage production",
+    "test": "vitest run --coverage --passWithNoTests",
+    "test:watch": "vitest --passWithNoTests",
     "lint": "eslint '**/*.ts'",
     "lint:fix": "eslint '**/*.ts' --fix",
-    "package": "serverless package"
+    "package": "serverless package",
+    "dev": "serverless offline --httpPort 3333"
   },
   "devDependencies": {
     "@serverless/eslint-config": "^5.1.0",
     "@types/http-errors": "^2.0.2",
     "@types/uuid": "^9.0.5",
     "esbuild": "^0.19.4",
+    "serverless-dotenv-plugin": "^6.0.0",
     "serverless-esbuild": "^1.48.4",
+    "serverless-offline": "^13.2.0",
     "tsconfig": "*",
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.427.0",
-    "@aws-sdk/client-ses": "^3.427.0",
-    "@aws-sdk/lib-dynamodb": "^3.427.0",
+    "@aws-sdk/client-ses": "^3.436.0",
     "@middy/core": "^4.6.4",
     "@middy/http-error-handler": "^4.6.4",
     "@middy/http-event-normalizer": "^4.6.4",
