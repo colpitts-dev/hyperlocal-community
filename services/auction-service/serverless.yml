@@ -14,16 +14,20 @@ provider:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
     NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000'
     AUCTIONS_TABLE_NAME: ${self:custom.HyperlocalAuctionsTable.name}
+    AUCTIONS_BUCKET_NAME: ${self:custom.HyperlocalAuctionsBucket.name}
     MAIL_QUEUE_URL: ${self:custom.HyperlocalMailQueue.url}
   iam:
     role:
       statements:
         - ${file(iam/HyperlocalAuctionsTableIAM.yml):HyperlocalAuctionsTableIAM}
         - ${file(iam/HyperlocalMailQueueIAM.yml):HyperlocalMailQueueIAM}
+        - ${file(iam/HyperlocalAuctionsBucketIAM.yml):HyperlocalAuctionsBucketIAM}
 
 resources:
   Resources:
     HyperlocalAuctionsTable: ${file(resources/HyperlocalAuctionsTable.yml):HyperlocalAuctionsTable}
+    HyperlocalAuctionsBucket: ${file(resources/HyperlocalAuctionsBucket.yml):HyperlocalAuctionsBucket}
+    HyperlocalAuctionsBucketPolicy: ${file(resources/HyperlocalAuctionsBucket.yml):HyperlocalAuctionsBucketPolicy}
 
 functions:
   createAuction:
@@ -63,6 +67,14 @@ functions:
     events:
       - schedule: rate(1 minute)
 
+  uploadAuctionPicture:
+    handler: src/handlers/uploadAuctionPicture.handler
+    events:
+      - http:
+          method: PATCH
+          path: auctions/{id}/picture
+          authorizer: ${self:custom.authorizer}
+
 package:
   individually: true
 
@@ -74,6 +86,8 @@ custom:
   HyperlocalMailQueue:
     arn: ${cf:hyperlocal-notification-service-${self:provider.stage}.HyperlocalMailQueueArn}
     url: ${cf:hyperlocal-notification-service-${self:provider.stage}.HyperlocalMailQueueUrl}
+  HyperlocalAuctionsBucket:
+    name: hyperlocal-auctions-bucket-${self:provider.stage}
   esbuild:
     bundle: true
     minify: false
