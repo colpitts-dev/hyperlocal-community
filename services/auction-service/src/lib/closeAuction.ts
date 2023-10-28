@@ -1,17 +1,13 @@
 import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { UpdateCommand, DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
+import type { Auction } from './types'
 
 const client = new DynamoDBClient({})
 const dynamo = DynamoDBDocumentClient.from(client)
 const sqs = new SQSClient({})
 
-export async function closeAuction(auction: {
-  id: string
-  title: string
-  seller: string
-  highestBid: { amount: number; bidder: string }
-}) {
+export async function closeAuction(auction: Auction) {
   const params = {
     TableName: process.env.AUCTIONS_TABLE_NAME,
     Key: { id: auction.id },

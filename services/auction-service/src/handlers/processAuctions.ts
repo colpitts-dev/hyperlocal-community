@@ -7,7 +7,7 @@ async function processAuctions() {
   try {
     const auctionsToClose = await getEndedAuctions()
     const closePromises = auctionsToClose?.map(auction =>
-      closeAuction(auction as { id: string }),
+      closeAuction(auction),
     )
 
     await Promise.all(closePromises as Promise<UpdateCommandOutput>[])
