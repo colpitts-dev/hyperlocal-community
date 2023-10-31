@@ -7,6 +7,11 @@ HyperlocalAuctionsBucket:
     OwnershipControls:
       Rules:
         - ObjectOwnership: ObjectWriter
+    LifecycleConfiguration:
+      Rules:
+        - Id: ExpiredObjects
+          Status: Enabled
+          ExpirationInDays: 1
 
 HyperlocalAuctionsBucketPolicy:
   Type: AWS::S3::BucketPolicy

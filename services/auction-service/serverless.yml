@@ -67,12 +67,12 @@ functions:
     events:
       - schedule: rate(1 minute)
 
-  uploadAuctionPicture:
-    handler: src/handlers/uploadAuctionPicture.handler
+  uploadAuctionImage:
+    handler: src/handlers/uploadAuctionImage.handler
     events:
       - http:
           method: PATCH
-          path: auctions/{id}/picture
+          path: auctions/{id}/image
           authorizer: ${self:custom.authorizer}
 
 package:

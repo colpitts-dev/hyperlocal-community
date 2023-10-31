@@ -7,4 +7,5 @@ export interface Auction {
     amount: number
     bidder: string
   }
+  image: string
 }
