@@ -2738,6 +2738,13 @@
   resolved "https://registry.npmjs.org/@middy/core/-/core-4.6.4.tgz"
   integrity sha512-yO+z6ijOFUeXJj/SOmEy2lP0ZxGGkJyaNXSUUQZdyLeNIzHtqqCvef/eIym5WZnl4prEr76sHCv0dwEmfSwYLQ==
 
+"@middy/http-cors@^4.6.5":
+  version "4.6.5"
+  resolved "https://registry.yarnpkg.com/@middy/http-cors/-/http-cors-4.6.5.tgz#f31b53f4480988d135237463ef5b2268c9045173"
+  integrity sha512-+V56i+ya6lKWz6xZnayXf6vbrM8FvquXvkNeBsAfy945u/CHvbXGWLzOCUop84JWXg1WCfIruyWtRveM0thyZg==
+  dependencies:
+    "@middy/util" "4.6.5"
+
 "@middy/http-error-handler@^4.6.4":
   version "4.6.4"
   resolved "https://registry.npmjs.org/@middy/http-error-handler/-/http-error-handler-4.6.4.tgz"
@@ -2761,6 +2768,11 @@
   version "4.6.4"
   resolved "https://registry.npmjs.org/@middy/util/-/util-4.6.4.tgz"
   integrity sha512-U9wQtmBlnHKdkTMUfdJXVkVRU0BKdXBOi3jFPalUVgZL/SlMACLyelitFUmNhfsjXBPvBdPJg7wadnAzzWRRZQ==
+
+"@middy/util@4.6.5":
+  version "4.6.5"
+  resolved "https://registry.yarnpkg.com/@middy/util/-/util-4.6.5.tgz#cf5efe5ba85554d88c530aa8f12a5b32facc3779"
+  integrity sha512-4cSIgW2kLYcfQ13Z1hHK7BDLCBsBe76iIiJ7xlPd/G3gwOl661K/jYGFkpNvksbmkEpqwNR1EFve0Mw3i2jMJQ==
 
 "@middy/validator@^4.6.4":
   version "4.6.4"

@@ -1,10 +1,10 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { UpdateCommand, DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
-import createError from 'http-errors'
-import { commonMiddleware } from '../lib/commonMiddleware'
-import { getAuctionById } from './getAuction'
 import validator from '@middy/validator'
 import { transpileSchema } from '@middy/validator/transpile'
+import createHttpError from 'http-errors'
+import { commonMiddleware } from '@lib/commonMiddleware'
+import { getAuctionById } from './getAuction'
 
 const client = new DynamoDBClient({})
 const dynamo = DynamoDBDocumentClient.from(client)
@@ -18,22 +18,22 @@ async function placeBid(event: any) {
 
   // Bid identity validation
   if (email === auction.seller) {
-    throw new createError.Forbidden('You cannot bid on your own auctions!')
+    throw new createHttpError.Forbidden('You cannot bid on your own auctions!')
   }
 
   // Avoid double bidding
   if (email === auction.highestBid.bidder) {
-    throw new createError.Forbidden('You are already the highest bidder!')
+    throw new createHttpError.Forbidden('You are already the highest bidder!')
   }
 
   // Auction status validation
   if (auction.status !== 'OPEN') {
-    throw new createError.Forbidden('You cannot bid on closed auctions!')
+    throw new createHttpError.Forbidden('You cannot bid on closed auctions!')
   }
 
   // Bid amount validation
   if (amount <= auction.highestBid.amount) {
-    throw new createError.Forbidden(
+    throw new createHttpError.Forbidden(
       `Your bid must be hight that ${auction.highestBid.amount}`,
     )
   }
@@ -61,7 +61,7 @@ async function placeBid(event: any) {
     }
   } catch (error) {
     console.log(error)
-    throw new createError.InternalServerError('Opps, something went wrong!')
+    throw new createHttpError.InternalServerError('Opps, something went wrong!')
   }
 }
 

@@ -3,7 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@handlers/*": ["src/handlers/*"]
+      "@handlers/*": ["src/handlers/*"],
+      "@lib/*": ["src/lib/*"]
     }
   },
   "include": ["src/**/*.ts"],
