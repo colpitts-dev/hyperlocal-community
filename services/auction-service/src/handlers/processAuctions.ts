@@ -6,9 +6,7 @@ import { getEndedAuctions } from '@lib/getEndedAuctions'
 async function processAuctions() {
   try {
     const auctionsToClose = await getEndedAuctions()
-    const closePromises = auctionsToClose?.map(auction =>
-      closeAuction(auction),
-    )
+    const closePromises = auctionsToClose?.map(auction => closeAuction(auction))
 
     await Promise.all(closePromises as Promise<UpdateCommandOutput>[])
 

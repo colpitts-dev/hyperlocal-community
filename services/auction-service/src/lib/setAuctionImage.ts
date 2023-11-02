@@ -4,7 +4,7 @@ import { UpdateCommand, DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
 const client = new DynamoDBClient({})
 const dynamo = DynamoDBDocumentClient.from(client)
 
-export async function setAuctionImage(id:string, imageUrl:string) {
+export async function setAuctionImage(id: string, imageUrl: string) {
   const params = {
     TableName: process.env.AUCTIONS_TABLE_NAME,
     Key: { id },

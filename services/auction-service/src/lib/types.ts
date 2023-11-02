@@ -1,7 +1,7 @@
 export interface Auction {
   id: string
   title: string
-  seller: string,
+  seller: string
   status: 'OPEN' | 'CLOSED'
   highestBid: {
     amount: number

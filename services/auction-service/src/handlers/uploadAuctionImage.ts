@@ -7,20 +7,21 @@ import { setAuctionImage } from '@lib/setAuctionImage'
 import { getAuctionById } from './getAuction'
 
 async function uploadAuctionImage(event: any) {
-  console.log('uploadAuctionImage', event.body)
   const { id } = event.pathParameters
   const { email } = event?.requestContext.authorizer
   const auction = await getAuctionById(id)
 
   // Validate ownership
   if (email !== auction.seller) {
-    throw new createHttpError.Forbidden('You are not the seller of this auction!')
+    throw new createHttpError.Forbidden(
+      'You are not the seller of this auction!',
+    )
   }
 
   const base64 = event.body.replace(/^data:image\/\w+;base64,/, '')
   const buffer = Buffer.from(base64, 'base64')
 
-  let updatedAuction;
+  let updatedAuction
 
   try {
     const result = await uploadImageS3(auction.id + '.png', buffer)
@@ -43,14 +44,13 @@ const requestSchema = {
     body: {
       type: 'string',
       minLength: 1,
-      pattern: 'data:image\/([a-zA-Z]*);base64,([^\"]*)'
+      pattern: 'data:image/([a-zA-Z]*);base64,([^"]*)',
     },
   },
 }
 
-export const handler = commonMiddleware(uploadAuctionImage)
-  .use(
-    validator({
-      eventSchema: transpileSchema(requestSchema),
-    }),
-  )
+export const handler = commonMiddleware(uploadAuctionImage).use(
+  validator({
+    eventSchema: transpileSchema(requestSchema),
+  }),
+)

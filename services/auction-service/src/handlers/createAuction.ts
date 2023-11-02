@@ -68,5 +68,5 @@ const requestSchema = {
 export const handler = commonMiddleware(createAuction).use(
   validator({
     eventSchema: transpileSchema(requestSchema),
-  })
+  }),
 )
