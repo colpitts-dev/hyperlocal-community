@@ -1,0 +1,27 @@
+HyperlocalAuctionsBucket:
+  Type: AWS::S3::Bucket
+  Properties:
+    BucketName: ${self:custom.HyperlocalAuctionsBucket.name}
+    PublicAccessBlockConfiguration:
+      BlockPublicAcls: false
+    OwnershipControls:
+      Rules:
+        - ObjectOwnership: ObjectWriter
+    LifecycleConfiguration:
+      Rules:
+        - Id: ExpiredObjects
+          Status: Enabled
+          ExpirationInDays: 1
+
+HyperlocalAuctionsBucketPolicy:
+  Type: AWS::S3::BucketPolicy
+  Properties:
+    Bucket: !Ref HyperlocalAuctionsBucket
+    PolicyDocument:
+      Statement:
+        - Sid: PublicRead
+          Effect: Allow
+          Principal: '*'
+          Action:
+            - s3:GetObject
+          Resource: arn:aws:s3:::${self:custom.HyperlocalAuctionsBucket.name}/*

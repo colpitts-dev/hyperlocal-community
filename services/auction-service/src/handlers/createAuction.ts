@@ -1,10 +1,10 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { PutCommand, DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
-import createError from 'http-errors'
+import createHttpError from 'http-errors'
 import { v4 as uuid } from 'uuid'
 import validator from '@middy/validator'
 import { transpileSchema } from '@middy/validator/transpile'
-import { commonMiddleware } from '../lib/commonMiddleware'
+import { commonMiddleware } from '@lib/commonMiddleware'
 
 const client = new DynamoDBClient({})
 const dynamo = DynamoDBDocumentClient.from(client)
@@ -43,7 +43,7 @@ async function createAuction(event: any) {
     }
   } catch (error) {
     console.log(error)
-    throw new createError.InternalServerError(
+    throw new createHttpError.InternalServerError(
       'Opps, something went wrong trying to create the auction!',
     )
   }

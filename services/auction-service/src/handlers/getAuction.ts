@@ -1,7 +1,8 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { GetCommand, DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
-import createError from 'http-errors'
-import { commonMiddleware } from '../lib/commonMiddleware'
+import createHttpError from 'http-errors'
+import { commonMiddleware } from '@lib/commonMiddleware'
+import { Auction } from '@lib/types'
 
 const client = new DynamoDBClient({})
 const dynamo = DynamoDBDocumentClient.from(client)
@@ -16,14 +17,14 @@ export async function getAuctionById(id: string) {
 
     const response = await dynamo.send(command)
 
-    auction = response.Item
+    auction = response.Item as Auction
   } catch (error) {
     console.log(error)
-    throw new createError.InternalServerError()
+    throw new createHttpError.InternalServerError()
   }
 
   if (!auction)
-    throw new createError.NotFound(`Auction with ID "${id}" not found!`)
+    throw new createHttpError.NotFound(`Auction with ID "${id}" not found!`)
 
   return auction
 }

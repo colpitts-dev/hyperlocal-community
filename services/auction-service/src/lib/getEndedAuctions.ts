@@ -1,5 +1,6 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { QueryCommand, DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
+import { Auction } from './types'
 
 const client = new DynamoDBClient({})
 const dynamo = DynamoDBDocumentClient.from(client)
@@ -23,5 +24,5 @@ export async function getEndedAuctions() {
 
   const result = await dynamo.send(command)
 
-  return result.Items
+  return result.Items as Auction[]
 }
