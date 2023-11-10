@@ -30,23 +30,6 @@ export const connectMongoDB = async () => {
   return conn
 }
 
-// export async function connectDB() {
-//   try {
-//     mongoose.set('strictQuery', false)
-//     await mongoose.connect(
-//       process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/server_dev',
-//       {
-//         autoCreate: true,
-//       },
-//     )
-//     console.log(`💾 MongoDB successfully connected`)
-//     return
-//   } catch (error) {
-//     console.log(`🚫 MongoDB connect error`)
-//     process.exit(0)
-//   }
-// }
-
 export async function disconnectMongoDB() {
   try {
     await mongoose.connection.close(false)
