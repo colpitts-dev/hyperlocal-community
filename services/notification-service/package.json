@@ -16,7 +16,7 @@
     "lint": "eslint '**/*.ts'",
     "lint:fix": "eslint '**/*.ts' --fix",
     "package": "serverless package",
-    "dev": "serverless offline --httpPort 3333"
+    "dev": "serverless offline --httpPort 4001 --lambdaPort 4041"
   },
   "devDependencies": {
     "@serverless/eslint-config": "^5.1.0",

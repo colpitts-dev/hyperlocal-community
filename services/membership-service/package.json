@@ -6,7 +6,7 @@
   "author": "Adam Colpitts",
   "license": "MIT",
   "scripts": {
-    "dev": "sls offline start --httpPort 4001 --lambdaPort 4041",
+    "dev": "sls offline start --httpPort 4002 --lambdaPort 4042",
     "check:updates": "npx npm-check-updates",
     "check:updates:u": "npx npm-check-updates -u && pnpm i",
     "deploy:dev": "serverless deploy --verbose",
