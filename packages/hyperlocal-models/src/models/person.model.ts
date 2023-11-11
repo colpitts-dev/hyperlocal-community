@@ -3,6 +3,7 @@ import { Schema, model } from 'mongoose'
 import type { MembershipDocument } from './membership.model'
 
 export interface PersonInput {
+  nickname: string
   name: string
   email: string
   age: number
@@ -17,6 +18,7 @@ export interface PersonDocument extends Document, PersonInput {
 
 const PersonSchema = new Schema<PersonDocument>(
   {
+    nickname: { type: String, required: [true, 'Nickname is required.'] },
     name: { type: String, required: [true, 'Name is required.'] },
     email: {
       type: String,

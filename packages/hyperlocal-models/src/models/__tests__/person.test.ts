@@ -50,6 +50,11 @@ describe('Person Model', () => {
     })
     const validationResult = invalidPerson.validateSync()
 
+    it('requires a nickname', () => {
+      const validationError = validationResult?.errors.name.message
+      expect(validationError).toBe('Nickname is required.')
+    })
+
     it('requires a name', () => {
       const validationError = validationResult?.errors.name.message
       expect(validationError).toBe('Name is required.')
