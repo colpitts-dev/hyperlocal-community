@@ -143,7 +143,7 @@ async function run() {
     const myCommunity = await Community.findById(docs[0])
 
     const membership = new Membership({
-      title: `${person.name} - ${myCommunity?.title}`,
+      title: `${person.nickname} - ${myCommunity?.title}`,
       owner: person,
       community: myCommunity,
     })

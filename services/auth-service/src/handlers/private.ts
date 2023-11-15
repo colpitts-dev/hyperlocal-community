@@ -8,9 +8,7 @@ export async function handler(event: any, context: any) {
       'Access-Control-Allow-Credentials': true,
     },
     body: JSON.stringify({
-      event,
-      context,
-      authorizer: event?.requestContext.authorizer,
+      ...event?.requestContext.authorizer,
     }),
   }
 }

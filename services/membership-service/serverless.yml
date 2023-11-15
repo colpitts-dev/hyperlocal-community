@@ -25,53 +25,62 @@ functions:
       - http:
           method: GET
           path: /people
+          authorizer: ${self:custom.authorizer}
   getPerson:
     handler: src/handlers/getPerson.handler
     events:
       - http:
           method: GET
           path: /people/{id}
+          authorizer: ${self:custom.authorizer}
   createCommunity:
     handler: src/handlers/createCommunity.handler
     events:
       - http:
           method: POST
           path: /communities
+          authorizer: ${self:custom.authorizer}
   getCommunities:
     handler: src/handlers/getCommunities.handler
     events:
       - http:
           method: GET
           path: /communities
+          authorizer: ${self:custom.authorizer}
   getCommunity:
     handler: src/handlers/getCommunity.handler
     events:
       - http:
           method: GET
           path: /communities/{id}
+          authorizer: ${self:custom.authorizer}
   createMembership:
     handler: src/handlers/createMembership.handler
     events:
       - http:
           method: POST
           path: /memberships
+          authorizer: ${self:custom.authorizer}
   getMemberships:
     handler: src/handlers/getMemberships.handler
     events:
       - http:
           method: GET
           path: /memberships
+          authorizer: ${self:custom.authorizer}
   getMembership:
     handler: src/handlers/getMembership.handler
     events:
       - http:
           method: GET
           path: /memberships/{id}
+          authorizer: ${self:custom.authorizer}
 
 package:
   individually: true
 
 custom:
+  authorizer: arn:aws:lambda:${aws:region}:${aws:accountId}:function:hyperlocal-auth-service-${self:provider.stage}-auth
   esbuild:
     bundle: true
     minify: false

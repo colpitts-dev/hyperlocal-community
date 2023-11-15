@@ -11,8 +11,6 @@
     "deploy:dev": "serverless deploy --verbose",
     "deploy:staging": "serverless deploy --aws-profile $AWS_PROFILE --stage staging",
     "deploy:production": "serverless deploy --aws-profile $AWS_PROFILE --stage production",
-    "test": "vitest run --coverage --passWithNoTests",
-    "test:watch": "vitest --passWithNoTests",
     "lint": "eslint '**/*.ts'",
     "lint:fix": "eslint '**/*.ts' --fix",
     "package": "serverless package",

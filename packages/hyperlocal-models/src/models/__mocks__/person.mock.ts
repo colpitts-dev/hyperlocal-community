@@ -1,14 +1,18 @@
 import { faker } from '@faker-js/faker'
+import { hashSync } from 'bcryptjs'
 
 export const mockPerson = () => {
   const nickname = faker.internet.userName()
-  const name = faker.person.fullName()
+  const firstName = faker.person.firstName()
+  const lastName = faker.person.firstName()
+  const hash = hashSync('Password123!', 10)
 
   return {
     nickname,
-    name,
-    email: faker.internet.email({ firstName: name }),
-    age: faker.number.int({ min: 18, max: 50 }), // Must be 18+
-    location: faker.location.city(),
+    firstName,
+    lastName,
+    hash,
+    email: faker.internet.email({ firstName, lastName }),
+    birthdate: faker.date.past({ years: 21 }).toISOString(),
   }
 }

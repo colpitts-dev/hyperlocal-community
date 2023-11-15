@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars -- ignore */
 import { cookies } from 'next/headers'
 
-module.exports = {
-  POST: logout,
-}
-
-function logout(req: Request): void {
+export async function POST(request: Request, response: Response) {
   cookies().delete('authorization')
+  return new Response(null, {
+    status: 200,
+  })
 }

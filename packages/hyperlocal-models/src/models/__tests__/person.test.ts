@@ -21,18 +21,18 @@ describe('Person Model', () => {
       const fetchedPerson = await Person.findOne({ _id: person })
 
       expect(fetchedPerson).toBeDefined()
-      expect(fetchedPerson?.name).toEqual(personInput.name)
+      expect(fetchedPerson?.firstName).toEqual(personInput.firstName)
     })
 
     it('updates a person', async () => {
       const personUpdateInput: PersonInput = mockPerson()
       await Person.updateOne(
         { _id: person },
-        { ...personUpdateInput, name: 'John Doe' },
+        { ...personUpdateInput, firstName: 'John' },
       )
       const fetchedPerson = await Person.findOne({ _id: person })
       expect(fetchedPerson).toBeDefined()
-      expect(fetchedPerson?.name).toBe('John Doe')
+      expect(fetchedPerson?.firstName).toBe('John')
     })
 
     it('deletes a person', async () => {
@@ -44,20 +44,28 @@ describe('Person Model', () => {
 
   describe('when creating new people', () => {
     const invalidPerson = new Person({
-      name: undefined,
+      nickname: undefined,
+      firstName: undefined,
+      lastName: undefined,
       email: 'invalidatexampledotcom',
-      age: 16,
+      birthdate: undefined,
+      hash: undefined,
     })
     const validationResult = invalidPerson.validateSync()
 
     it('requires a nickname', () => {
-      const validationError = validationResult?.errors.name.message
+      const validationError = validationResult?.errors.nickname.message
       expect(validationError).toBe('Nickname is required.')
     })
 
-    it('requires a name', () => {
-      const validationError = validationResult?.errors.name.message
-      expect(validationError).toBe('Name is required.')
+    it('requires a first name', () => {
+      const validationError = validationResult?.errors.firstName.message
+      expect(validationError).toBe('First name is required.')
+    })
+
+    it('requires a password hash', () => {
+      const validationError = validationResult?.errors.hash.message
+      expect(validationError).toBe('Password hash is required.')
     })
 
     it('requires a valid email address', () => {
@@ -65,9 +73,14 @@ describe('Person Model', () => {
       expect(validationError).toBe('Please enter a valid email.')
     })
 
-    it('requires age to be at least 18 years old', () => {
-      const validationError = validationResult?.errors.age.message
-      expect(validationError).toBe('Must be at least 18 years old.')
+    it('requires a birthdate', () => {
+      const validationError = validationResult?.errors.birthdate.message
+      expect(validationError).toBe('Birthdate is required.')
     })
+
+    // it('requires age to be at least 18 years old', () => {
+    //   const validationError = validationResult?.errors.age.message
+    //   expect(validationError).toBe('Must be at least 18 years old.')
+    // })
   })
 })
