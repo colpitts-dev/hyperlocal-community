@@ -12,6 +12,7 @@ export interface PersonInput {
 }
 
 export interface PersonDocument extends Document, PersonInput {
+  emailVerified: boolean
   memberships: MembershipDocument[]
   wallets: string[]
   hash: string
@@ -38,6 +39,10 @@ const PersonSchema = new Schema<PersonDocument>(
         message: 'Please enter a valid email.',
       },
       required: [true, 'Email is required.'],
+    },
+    emailVerified: {
+      type: Boolean,
+      default: false,
     },
     birthdate: {
       type: String,

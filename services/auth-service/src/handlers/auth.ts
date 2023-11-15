@@ -22,27 +22,29 @@ const generatePolicy = (principalId: string, methodArn: string) => {
 }
 
 export async function handler(event: any) {
+  // Check for JWT token
   if (!event.authorizationToken) {
     throw 'Unauthorized'
   }
 
   const token = event.authorizationToken.replace('Bearer ', '')
 
-  const apiGatewayWildcard = event.methodArn.split('/', 2).join('/') + '/*'
-
-  console.log({ apiGatewayWildcard })
   try {
+    // Verify claims and generate API Gateway policy
     const claims = jwt.verify(token, process.env.OAUTH_PUBLIC_KEY as string)
-    const { aud, ...contextClaims } = claims as any
     const policy = generatePolicy(claims.sub as string, event.methodArn)
 
-    console.log({ contextClaims })
+    // AWS ApiGateway doesn't support arrays in context
+    // only strings, bools, and numbers
+    const { aud, ...contextClaims } = claims as any
+    const apiGatewayContext = {
+      ...contextClaims,
+      aud: aud.toString(), // audience as a comma seperate string
+    }
+
     return {
       ...policy,
-      context: {
-        ...contextClaims,
-        aud: aud.toString(),
-      },
+      context: apiGatewayContext,
     }
   } catch (error) {
     console.log(error)
