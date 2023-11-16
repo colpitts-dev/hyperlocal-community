@@ -18,26 +18,16 @@ async function issueToken(event: any, context: any) {
 
     const person = await Person.findOne({ email }).populate({
       path: 'memberships',
-      populate: { path: 'community', select: ['title', 'description'] },
+      populate: { path: 'community', select: ['id', 'title', 'description'] },
     })
 
     if (!(person && bcrypt.compareSync(password, person?.hash))) {
       throw 'Email or password is incorrect'
     }
 
-    console.log('FOUND: ', person)
-
     const audience = person.memberships.map(membership => {
-      const slug = membership.community.title
-        .toLowerCase()
-        .trim()
-        .replace(/[^\w\s-]/g, '')
-        .replace(/[\s_-]+/g, '-')
-        .replace(/^-+|-+$/g, '')
-      return `membership:${slug}`
+      return `membership:${membership.community.id}`
     })
-
-    console.log('AUDIENCE: ', audience)
 
     const token = jwt.sign(
       {
@@ -63,7 +53,14 @@ async function issueToken(event: any, context: any) {
         'Access-Control-Allow-Credentials': true,
         'Set-Cookie': `authorization=${token}; path=/hyperlocal; Secure; HttpOnly;`,
       },
-      body: JSON.stringify({ person }),
+      body: JSON.stringify({
+        profile: {
+          nickname: person.nickname,
+          email: person.email,
+          wallet: person.wallets?.[0],
+        },
+        jwt: token,
+      }),
     }
   } catch (error) {
     console.log(error)

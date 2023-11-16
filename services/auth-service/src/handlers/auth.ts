@@ -39,7 +39,7 @@ export async function handler(event: any) {
     const { aud, ...contextClaims } = claims as any
     const apiGatewayContext = {
       ...contextClaims,
-      aud: aud.toString(), // audience as a comma seperate string
+      aud: aud.toString(), // Support multiple audiences as a comma seperate string
     }
 
     return {
