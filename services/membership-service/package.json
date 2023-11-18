@@ -27,6 +27,7 @@
     "esbuild": "^0.19.4",
     "jest": "^29.7.0",
     "mongodb-memory-server": "^9.0.1",
+    "serverless-domain-manager": "^7.1.2",
     "serverless-dotenv-plugin": "^6.0.0",
     "serverless-esbuild": "^1.48.4",
     "serverless-offline": "^13.2.0",

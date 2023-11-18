@@ -3,6 +3,7 @@ frameworkVersion: '3'
 
 plugins:
   - serverless-esbuild
+  - serverless-domain-manager
 
 provider:
   name: aws
@@ -35,7 +36,7 @@ functions:
     events:
       - http:
           method: POST
-          path: /auctions
+          path: /aucions
           authorizer: ${self:custom.authorizer}
 
   getAuctions:
@@ -43,7 +44,7 @@ functions:
     events:
       - http:
           method: GET
-          path: /auctions
+          path: /
           authorizer: ${self:custom.authorizer}
 
   getAuction:
@@ -51,7 +52,7 @@ functions:
     events:
       - http:
           method: GET
-          path: /auctions/{id}
+          path: /{id}
           authorizer: ${self:custom.authorizer}
 
   placeBid:
@@ -59,7 +60,7 @@ functions:
     events:
       - http:
           method: PATCH
-          path: /auctions/{id}/bid
+          path: /{id}/bid
           authorizer: ${self:custom.authorizer}
 
   processAuctions:
@@ -72,13 +73,25 @@ functions:
     events:
       - http:
           method: PATCH
-          path: auctions/{id}/image
+          path: /{id}/image
           authorizer: ${self:custom.authorizer}
 
 package:
   individually: true
 
 custom:
+  stage: ${opt:stage, self:provider.stage}
+  domains:
+    prod: api.hyper-local.site
+    staging: staging.api.hyper-local.site
+    dev: dev.api.hyper-local.site
+  customDomain:
+    basePath: 'auctions'
+    domainName: ${self:custom.domains.${self:custom.stage}}
+    stage: '${self:custom.stage}'
+    createRoute53Record: true
+    hostedZoneId: Z091874218YWSO43A1ZKC
+    certificateArn: arn:aws:acm:us-east-1:647504512489:certificate/d7234b8c-fef7-4a91-8c9b-8b06540c9c7e
   authorizer: arn:aws:lambda:${aws:region}:${aws:accountId}:function:hyperlocal-auth0-service-${self:provider.stage}-auth
   HyperlocalAuctionsTable:
     name: !Ref HyperlocalAuctionsTable

@@ -9,12 +9,42 @@ export function HomeTemplateLogin() {
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     try {
+      const data = {
+        email: 'ezekiel30@gmail.com',
+        password: 'Password123!',
+      }
+
       const res = await fetch(`/api/auth/login`, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
       })
+
+      // const res = await fetch(
+      //   `https://08v58uf13l.execute-api.ca-central-1.amazonaws.com/dev/oauth/token`,
+      //   {
+      //     method: 'POST',
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //     },
+      //     body: JSON.stringify({
+      //       //grant_type: 'password',
+      //       //client_id: process.env.CLIENT_ID,
+      //       //client_secret: process.env.CLIENT_SECRET,
+      //       email: data.email,
+      //       password: data.password,
+      //     }),
+      //   },
+      // )
+
+      const json = await res.json()
       // eslint-disable-next-line no-console -- ignore
-      console.log('AUTH: ', res.status)
-      setIdToken('Token Success')
+      //console.log('AUTH: ', res.status)
+      // eslint-disable-next-line no-console -- ignore
+      console.log('data: ', res.body)
+      setIdToken(json?.jwt as string)
     } catch (error: any) {
       // eslint-disable-next-line no-console -- ignore
       console.log(error)
@@ -37,9 +67,7 @@ export function HomeTemplateLogin() {
 
   const handleProtectedRequest = async () => {
     try {
-      const res = await fetch(`api/private`, {
-        method: 'POST',
-      })
+      const res = await fetch(`api/private`)
       if (res.status === 401) {
         return 'Unauthorized'
       }
@@ -54,8 +82,10 @@ export function HomeTemplateLogin() {
   }
 
   return (
-    <section className="z-10 items-center justify-between w-full max-w-5xl font-mono text-sm lg:flex">
-      <code className="font-mono font-bold text-gray-600">{idToken}</code>
+    <section className="z-10 items-center justify-between w-full max-w-5xl font-mono text-sm lg: lg:flex-col">
+      <code className="flex w-full pb-6 font-mono font-bold text-gray-600">
+        {idToken}
+      </code>
       <div className="flex space-x-4">
         <button
           type="button"

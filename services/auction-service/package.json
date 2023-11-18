@@ -20,6 +20,7 @@
     "@types/http-errors": "^2.0.2",
     "@types/uuid": "^9.0.5",
     "esbuild": "^0.19.4",
+    "serverless-domain-manager": "^7.1.2",
     "serverless-esbuild": "^1.48.4",
     "tsconfig": "*",
     "typescript": "^5.2.2"

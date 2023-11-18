@@ -6,6 +6,7 @@ plugins:
   - serverless-esbuild
   - serverless-offline
   - serverless-dotenv-plugin
+  - serverless-domain-manager
 
 provider:
   name: aws
@@ -61,6 +62,18 @@ package:
   individually: true
 
 custom:
+  stage: ${opt:stage, self:provider.stage}
+  domains:
+    prod: auth.hyper-local.site
+    staging: staging.auth.hyper-local.site
+    dev: dev.auth.hyper-local.site
+  customDomain:
+    domainName: ${self:custom.domains.${self:custom.stage}}
+    stage: '${self:custom.stage}'
+    createRoute53Record: true
+    hostedZoneId: Z091874218YWSO43A1ZKC
+    certificateArn: arn:aws:acm:us-east-1:647504512489:certificate/b406424d-e9a8-48a5-a998-15b656d65de1
+
   esbuild:
     bundle: true
     minify: false

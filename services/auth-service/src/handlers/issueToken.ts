@@ -36,7 +36,7 @@ async function issueToken(event: any, context: any) {
         nickname: person.nickname,
         email: person.email,
         email_verified: person.emailVerified,
-        wallet: '0x0000000',
+        wallet: person.wallets?.[0],
         iss: 'https://auth.ca.hyper-local.site',
         scope: 'openid profile nickname wallet email',
       },

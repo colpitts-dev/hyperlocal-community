@@ -2,14 +2,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars -- ignore */
 import { cookies } from 'next/headers'
 
-export async function POST(request: Request, response: Response) {
+export async function GET(request: Request, response: Response) {
   const token = cookies().get('authorization')
   if (!token) {
     return new Response('Unauthorized', {
       status: 401,
     })
   }
-
+  console.log(token)
   try {
     // eslint-disable-next-line turbo/no-undeclared-env-vars -- ignore
     const res = await fetch(`${process.env.MEMBERSHIP_SERVICE}/communities`, {
@@ -28,6 +28,7 @@ export async function POST(request: Request, response: Response) {
   } catch (e) {
     console.log(e)
   }
+
   return new Response(JSON.stringify({ status: 'error', message: 'Opps!' }), {
     status: 500,
   })
