@@ -29,6 +29,9 @@ async function issueToken(event: any, context: any) {
       return `membership:${membership.community.id}`
     })
 
+    // TODO: enable web3 wallets
+    const wallet = person.wallets?.[0]
+
     const token = jwt.sign(
       {
         sub: person.id,
@@ -36,9 +39,9 @@ async function issueToken(event: any, context: any) {
         nickname: person.nickname,
         email: person.email,
         email_verified: person.emailVerified,
-        wallet: person.wallets?.[0],
+        wallet,
         iss: 'https://auth.ca.hyper-local.site',
-        scope: 'openid profile nickname wallet email',
+        scope: `openid profile nickname email${wallet ? ' wallet' : ''}`,
       },
       process.env.OAUTH_PUBLIC_KEY as string,
       { expiresIn: '1h' },
