@@ -51,7 +51,9 @@ async function issueToken(event: any, context: any) {
 
     // Prepare audience for jwt
     const audience = person.memberships.map(membership => {
-      return `membership:${membership.community.id}`
+      return `membership:${membership.community.id}:${
+        membership.isAdmin ? 'admin' : 'general'
+      }`
     })
 
     // TODO: enable web3 wallet support
