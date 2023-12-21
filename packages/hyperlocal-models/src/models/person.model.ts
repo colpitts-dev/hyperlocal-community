@@ -4,14 +4,18 @@ import type { MembershipDocument } from './membership.model'
 
 export interface PersonInput {
   nickname: string
-  name: string
+  firstName: string
+  lastName?: string
   email: string
-  age: number
+  birthdate: string
   location?: string
 }
 
 export interface PersonDocument extends Document, PersonInput {
+  emailVerified: boolean
   memberships: MembershipDocument[]
+  wallets: string[]
+  hash: string
   createdAt: Date
   updatedAt: Date
 }
@@ -19,7 +23,9 @@ export interface PersonDocument extends Document, PersonInput {
 const PersonSchema = new Schema<PersonDocument>(
   {
     nickname: { type: String, required: [true, 'Nickname is required.'] },
-    name: { type: String, required: [true, 'Name is required.'] },
+    firstName: { type: String, required: [true, 'First name is required.'] },
+    lastName: { type: String },
+    hash: { type: String, required: [true, 'Password hash is required.'] },
     email: {
       type: String,
       trim: true,
@@ -34,13 +40,13 @@ const PersonSchema = new Schema<PersonDocument>(
       },
       required: [true, 'Email is required.'],
     },
-    location: {
-      type: String,
+    emailVerified: {
+      type: Boolean,
+      default: false,
     },
-    age: {
-      type: Number,
-      required: [true, 'Age is required.'],
-      min: [18, 'Must be at least 18 years old.'],
+    birthdate: {
+      type: String,
+      required: [true, 'Birthdate is required.'],
     },
     memberships: [
       {
@@ -48,9 +54,23 @@ const PersonSchema = new Schema<PersonDocument>(
         ref: 'Membership',
       },
     ],
+    wallets: [
+      {
+        type: String,
+        index: true,
+      },
+    ],
   },
   {
     timestamps: true,
+    toJSON: {
+      virtuals: true,
+      versionKey: false,
+      transform: (_doc, ret) => {
+        delete ret._id
+        delete ret.hash
+      },
+    },
   },
 )
 

@@ -6,6 +6,7 @@ plugins:
   - serverless-esbuild
   - serverless-offline
   - serverless-dotenv-plugin
+  - serverless-domain-manager
 
 provider:
   name: aws
@@ -25,53 +26,81 @@ functions:
       - http:
           method: GET
           path: /people
+          authorizer: ${self:custom.authorizer}
+          cors: true
   getPerson:
     handler: src/handlers/getPerson.handler
     events:
       - http:
           method: GET
           path: /people/{id}
+          authorizer: ${self:custom.authorizer}
+          cors: true
   createCommunity:
     handler: src/handlers/createCommunity.handler
     events:
       - http:
           method: POST
           path: /communities
+          authorizer: ${self:custom.authorizer}
+          cors: true
   getCommunities:
     handler: src/handlers/getCommunities.handler
     events:
       - http:
           method: GET
           path: /communities
+          authorizer: ${self:custom.authorizer}
+          cors: true
   getCommunity:
     handler: src/handlers/getCommunity.handler
     events:
       - http:
           method: GET
           path: /communities/{id}
+          authorizer: ${self:custom.authorizer}
+          cors: true
   createMembership:
     handler: src/handlers/createMembership.handler
     events:
       - http:
           method: POST
           path: /memberships
+          authorizer: ${self:custom.authorizer}
+          cors: true
   getMemberships:
     handler: src/handlers/getMemberships.handler
     events:
       - http:
           method: GET
           path: /memberships
+          authorizer: ${self:custom.authorizer}
+          cors: true
   getMembership:
     handler: src/handlers/getMembership.handler
     events:
       - http:
           method: GET
           path: /memberships/{id}
+          authorizer: ${self:custom.authorizer}
+          cors: true
 
 package:
   individually: true
 
 custom:
+  authorizer: arn:aws:lambda:${aws:region}:${aws:accountId}:function:hyperlocal-auth-service-${self:provider.stage}-auth
+  stage: ${opt:stage, self:provider.stage}
+  domains:
+    prod: api.hyper-local.site
+    staging: staging.api.hyper-local.site
+    dev: dev.api.hyper-local.site
+  customDomain:
+    domainName: ${self:custom.domains.${self:custom.stage}}
+    stage: '${self:custom.stage}'
+    createRoute53Record: true
+    hostedZoneId: Z091874218YWSO43A1ZKC
+    certificateArn: arn:aws:acm:us-east-1:647504512489:certificate/d7234b8c-fef7-4a91-8c9b-8b06540c9c7e
   esbuild:
     bundle: true
     minify: false

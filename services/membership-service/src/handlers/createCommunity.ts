@@ -12,13 +12,13 @@ async function createCommunity(event: any, context: any) {
   try {
     // Connect to mongodb
     await connectMongoDB()
-    const { title, description, isPublic, themeSettings } = event?.body
+    const { title, description, isPublic, theme } = event?.body
 
     const newCommunity = await Community.create({
       title,
       description,
       isPublic,
-      themeSettings,
+      theme,
     })
 
     return {

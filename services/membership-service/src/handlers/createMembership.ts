@@ -37,7 +37,7 @@ async function createMembership(event: any, context: any) {
 
     const newMembership = await Membership.create(membership)
 
-    community?.memberships.push(newMembership)
+    community.memberships?.push(newMembership)
     await community?.save()
 
     owner?.memberships.push(newMembership)

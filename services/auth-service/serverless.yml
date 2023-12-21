@@ -1,0 +1,85 @@
+service: hyperlocal-auth-service
+frameworkVersion: '3'
+useDotenv: true
+
+plugins:
+  - serverless-esbuild
+  - serverless-offline
+  - serverless-dotenv-plugin
+  - serverless-domain-manager
+
+provider:
+  name: aws
+  region: ca-central-1
+  runtime: nodejs18.x
+  memorySize: 256
+  stage: ${opt:stage, 'dev'}
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
+    NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000'
+    OAUTH_PUBLIC_KEY: 'dc85532ea539620c9feafc485d81a551e6a4a8a2cab7e755b5fd4d56cfdefe21'
+    MONGO_URI: ${env:MONGO_URI}
+
+resources:
+  Resources:
+    GatewayResponseDefault4XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+
+functions:
+  auth:
+    handler: src/handlers/auth.handler
+  issueToken:
+    handler: src/handlers/issueToken.handler
+    events:
+      - http:
+          path: oauth/token
+          method: POST
+          cors: true
+  publicEndpoint:
+    handler: src/handlers/public.handler
+    events:
+      - http:
+          path: public
+          method: POST
+          cors: true
+  privateEndpoint:
+    handler: src/handlers/private.handler
+    events:
+      - http:
+          path: private
+          method: POST
+          authorizer: auth
+          cors: true
+
+package:
+  individually: true
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  domains:
+    prod: auth.hyper-local.site
+    staging: staging.auth.hyper-local.site
+    dev: dev.auth.hyper-local.site
+  customDomain:
+    domainName: ${self:custom.domains.${self:custom.stage}}
+    stage: '${self:custom.stage}'
+    createRoute53Record: true
+    hostedZoneId: Z091874218YWSO43A1ZKC
+    certificateArn: arn:aws:acm:us-east-1:647504512489:certificate/b406424d-e9a8-48a5-a998-15b656d65de1
+
+  esbuild:
+    bundle: true
+    minify: false
+    sourcemap: true
+    exclude:
+      - aws-sdk
+    target: 'node18'
+    platform: 'node'
+    concurrency: 10
